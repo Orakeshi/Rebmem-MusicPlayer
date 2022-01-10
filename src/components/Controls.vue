@@ -1,6 +1,8 @@
 <template>
   <div id="audio-player-container">
-    <audio src="https://assets.codepen.io/4358584/Anitek_-_Komorebi.mp3" preload="metadata" loop></audio>
+    <audio id="audio-player-test" src="https://assets.codepen.io/4358584/Anitek_-_Komorebi.mp3" preload="metadata" loop>
+      <source id="audioSource" src="">
+    </audio>
     <div id="img-container">
       <img id="song-img" src="https://i.imgur.com/ajkNVge.png">
     </div>
@@ -62,7 +64,10 @@
 
     playAnimation.goToAndStop(14, true);
 
-    playIconContainer.addEventListener('click', () => {
+    window.changeSong = function (bypassPlayState){
+      if(bypassPlayState!=null){
+        playState=bypassPlayState;
+      }
       if(playState === 'play') {
         audio.play();
         playAnimation.playSegments([14, 27], true);
@@ -74,7 +79,12 @@
         cancelAnimationFrame(raf);
         playState = 'play';
       }
-    });
+    };
+
+    playIconContainer.addEventListener('click', () => {
+      changeSong();
+    })
+
 
     muteIconContainer.addEventListener('click', () => {
       if(muteState === 'unmute') {
@@ -232,7 +242,6 @@
   #controls-parent{
     position: relative;
     margin: 0;
-    border: 3px solid pink;
     width: 100%;
     height: auto;
   }
