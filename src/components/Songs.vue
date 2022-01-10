@@ -22,6 +22,7 @@ export default {
 
 <style scoped>
 .songs-container{
+  padding-bottom: 5%;
   margin: 0 auto;
 }
 .song-item{

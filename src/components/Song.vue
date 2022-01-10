@@ -2,11 +2,13 @@
   <div class="song">
     <div class="song-img">
 <!--      <img :src="image">-->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png">
+      <img v-bind:src="song.imgdata">
     </div>
 
     <div class="song-name" id="song-name-container">
-      <p>{{ song.name }}</p>
+      <div id="song-text-parent">
+        <p>{{ song.title }}</p>
+      </div>
     </div>
     <!--<h3>{{ song.text }}</h3>-->
   </div>
@@ -32,26 +34,18 @@ export default {
 <style scoped>
 .song {
   position: relative;
-  display: flex;
+  display: block;
   flex-flow: column;
   width: 100%;
   height: 100%;
-  background: grey;
-  /*
-  margin: 5px;
-  padding: 10px 20px;
-   */
+  background: #1E272E;
   cursor: pointer;
   border: 1px solid red;
-}
-.song h3 {
-
 }
 .song-img{
   position: relative;
   width: 100%;
   height: 75%;
-  flex-grow : 1;
 }
 .song-img img{
   height: 100%;
@@ -60,20 +54,31 @@ export default {
 
 .song-name {
   position: relative;
-  bottom: 0;
   border: blue 1px solid;
   height: 25%;
   width: 100%;
-  text-align: center;
+  margin: 0 auto;
 }
 
-.song-name p{
-  position: relative;
-  font-size: large;
-  border: 1px solid green;
+#song-text-parent{
+  height: auto;
+  width: 100%;
   margin: 0;
+  position: absolute;
+  border: 1px solid yellow;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+#song-text-parent p{
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  border: 1px solid green;
   height: 100%;
   width: 100%;
+  color: white;
   text-align: center;
 }
 
