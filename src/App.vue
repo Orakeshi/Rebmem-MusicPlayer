@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <Library title="Booey"></Library>
+    <Songs :songs="songs"></Songs>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Library from './components/Library';
+import Songs from './components/Songs';
+const fs = window.require("fs")
+const testFolder = './src/assets/songs';
+console.log(testFolder);
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Library,
+    Songs,
+  },
+  data(){
+    return {
+      songs: []
+    }
+  },
+  created() {
+    let test = 1;
+    fs.readdir(testFolder, (err, files) => {
+      if(err){
+        console.log(err);
+      }
+      else{
+        files.forEach(file => {
+          let newSong = {
+            id: test,
+            name: file,
+          }
+          this.songs.push(newSong);
+          test +=1
+          console.log(file);
+        });
+      }
+    });
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
