@@ -12,14 +12,17 @@
 </template>
 
 <script>
+import Button from './Button'
 import Songs from './Songs';
 
 const fs = window.require("fs")
+const path = window.require("path")
 
 const testFolder = './src/assets/songs';
 console.log(testFolder);
 // Simple API - will fetch all tags
-const jsmediatags = window.require('jsmediatags')
+const jsmediatags = window.require("jsmediatags");
+
 
 export default {
   name: 'Library',
@@ -27,6 +30,7 @@ export default {
     title: String,
   },
   components: {
+    Button,
     Songs
   },
   data(){
@@ -47,10 +51,10 @@ export default {
               id: songId,
               title: "",
               artist: "",
-              audiosrc: testFolder+"/"+file,
+              audiosrc: path.join(testFolder,'../../../..','src/assets/songs/',file),
               imgdata: ""
             }
-            console.log(testFolder+"/"+file)
+            console.log(path.join(testFolder,'../../../..','src/assets/songs/',file))
 
             new jsmediatags.Reader(testFolder+"/"+file).setTagsToRead(["title", "artist", "picture", "lyrics"]).read({
               onSuccess: function(tag) {
@@ -63,7 +67,6 @@ export default {
                   base64String += String.fromCharCode(tags.picture.data[i]);
                 }
                 let dataUrl = "data:" + tags.picture.format + ";base64," + window.btoa(base64String);
-                console.log(dataUrl)
                 newSong.imgdata = dataUrl
                 newSong.title = tags.title;
                 newSong.artist = tags.artist;
@@ -84,7 +87,6 @@ export default {
             console.log("Not audio")
           }
         });
-        console.log(this.songs)
       }
     });
   }
