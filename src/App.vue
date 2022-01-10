@@ -1,15 +1,19 @@
 <template>
   <div id="container">
-    <h1>Hey Howdy</h1>
+    <Library title="Bubba Booey"></Library>
+    <Button></Button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Library from './components/Library';
+import Button from './components/Button';
 export default {
   name: 'App',
-  components: {},
+  components: {
+    Library,
+    Button
+  },
 }
 </script>
 
