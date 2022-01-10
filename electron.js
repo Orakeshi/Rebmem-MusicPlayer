@@ -26,7 +26,6 @@ function createWindow () {
         win = null
     })
 }
-
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {

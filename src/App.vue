@@ -1,7 +1,15 @@
 <template>
   <div class="container">
-    <Library title="Library"></Library>
-    <Controls></Controls>
+    <div class="library-parent-container">
+      <Library title="Library"></Library>
+    </div>
+    <div class="divider">
+
+    </div>
+    <div class="controls-parent-container">
+      <Controls></Controls>
+    </div>
+
   </div>
 </template>
 
@@ -19,8 +27,33 @@ export default {
 </script>
 
 <style>
-  html, body{
-    padding: 0;
-    margin: 0;
+  html{
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+
+  body{
+    margin:0;
+    padding:0;
+    height:100%;
+    background: #485460;
+  }
+  .container{
+    display: block;
+    position: absolute;
+    height: 100%;
+  }
+  .library-parent-container{
+    position: relative;
+    height: 85%;
+    overflow: auto;
+  }
+  .controls-parent-container{
+    position: fixed;
+    height: 15%;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
   }
 </style>

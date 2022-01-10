@@ -21,11 +21,10 @@ export default {
 
 <style scoped>
   .controls-container {
-    position: fixed;
     background: grey;
-    bottom: 0;
+    display: block;
     width: 100%;
-    height: 100px;
+    height: 100%;
     border: 1px pink solid;
   }
 </style>
