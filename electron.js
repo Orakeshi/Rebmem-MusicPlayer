@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain, dialog  } = require('electron')
 
 try {
-    require('electron-reloader')(module)
+// Enable live reload for all the files inside your project directory
+    require('electron-reload')(__dirname);
 } catch (_) {}
 
 let win

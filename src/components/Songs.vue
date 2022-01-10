@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :key="song.id" v-for="song in songs">
+  <div class="songs-container">
+    <div class="song-item" v-for="song in songs">
       <Song :song="song"></Song>
     </div>
   </div>
@@ -8,6 +8,7 @@
 
 <script>
 import Song from './Song'
+
 export default {
   name: "Songs",
   props: {
@@ -20,4 +21,16 @@ export default {
 </script>
 
 <style scoped>
+.songs-container{
+  margin: 0 auto;
+}
+.song-item{
+  height: 150px;
+  width: 150px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin: 10px 10px 10px 10px;
+  justify-content: center;
+}
+
 </style>
