@@ -11,10 +11,12 @@ export default {
   },
   methods: {
     onClick(){
+      console.log("button click")
     }
   },
 }
 </script>
 
 <style scoped>
+
 </style>
