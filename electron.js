@@ -1,27 +1,10 @@
 const { app, BrowserWindow, ipcMain, dialog  } = require('electron')
-const fs = require('fs')
+
 try {
     require('electron-reloader')(module)
 } catch (_) {}
 
-const path = require('path')
-const walkdir = require('walkdir');
-
-const storage = require('electron-json-storage');
-
-/*
-storage.set('foobar', { foo: 'bar' }).then(function() {
-    // Read
-    storage.get('foobar').then(function(object) {
-        console.log(object.foo);
-        // will print "bar"
-    });
-});
-*/
-
-
 let win
-
 
 function createWindow () {
     win = new BrowserWindow({
@@ -56,11 +39,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-
-function readFileSync(filepath, format){
-    const data = fs.readFileSync(filepath, format);
-    return data;
-}
-//writeToFileSync("./songs/test.txt", 'Hello\nworld')
-console.log(readFileSync("./src/assets/songs/songs.json", "utf8"))
