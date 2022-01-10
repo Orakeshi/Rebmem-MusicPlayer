@@ -20,6 +20,7 @@
     "core-js": "^3.6.5",
     "electron-reload": "^2.0.0-alpha.1",
     "jsmediatags": "^3.9.7",
+    "lottie-web": "^5.8.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {

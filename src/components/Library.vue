@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import Button from './Button'
 import Songs from './Songs';
 
 const fs = window.require("fs")
@@ -19,7 +20,7 @@ const fs = window.require("fs")
 const testFolder = './src/assets/songs';
 console.log(testFolder);
 // Simple API - will fetch all tags
-const jsmediatags = window.require('jsmediatags')
+const jsmediatags = window.require("jsmediatags");
 
 export default {
   name: 'Library',
@@ -27,6 +28,7 @@ export default {
     title: String,
   },
   components: {
+    Button,
     Songs
   },
   data(){

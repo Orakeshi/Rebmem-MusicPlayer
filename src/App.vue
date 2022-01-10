@@ -51,7 +51,8 @@ export default {
   }
   .controls-parent-container{
     position: fixed;
-    height: 15%;
+    height: 80px;
+    max-height: 80px;
     width: 100%;
     bottom: 0;
     overflow: hidden;

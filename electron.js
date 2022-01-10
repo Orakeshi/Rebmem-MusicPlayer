@@ -11,6 +11,8 @@ function createWindow () {
     win = new BrowserWindow({
         width: 900,
         height: 600,
+        minHeight: 600,
+        minWidth: 900,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -26,6 +28,7 @@ function createWindow () {
         win = null
     })
 }
+
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
