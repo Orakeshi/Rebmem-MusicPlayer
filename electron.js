@@ -26,4 +26,4 @@ app.on('activate', () => {
     if (win === null) {
         createWindow()
     }
-})
+}) 
