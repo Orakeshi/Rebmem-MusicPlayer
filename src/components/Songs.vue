@@ -1,6 +1,6 @@
 <template>
   <div class="songs-container">
-    <div class="song-item" v-for="song in songs">
+    <div class="song-item" v-for="song in songs" :key="song.id">
       <Song :song="song"></Song>
     </div>
   </div>

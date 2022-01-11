@@ -24,14 +24,14 @@ export default {
     song: Object
   },
   methods: {
-    playSong: function(event){
+    playSong: function(){
       console.log("DOING")
       //console.log(this.song.artist)
       console.log("HOWDY: "+this.song.audiosrc);
       document.getElementById("audio-player-test").setAttribute("src", this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
-      changeSong('play')
+      window.changeSong('play')
     }
   },
   /*data: function (){
