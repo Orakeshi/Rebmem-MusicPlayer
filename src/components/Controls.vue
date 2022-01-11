@@ -405,9 +405,6 @@
     background: #007db5;
   }
 
-
-
-
   /* NO MY STYLES */
   body {
     margin: 0;

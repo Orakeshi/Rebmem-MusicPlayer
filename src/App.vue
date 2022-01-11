@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="nav-parent-container">
+      <Navigation></Navigation>
+    </div>
     <div class="library-parent-container">
       <Library title="Library"></Library>
     </div>
@@ -16,10 +19,12 @@
 <script>
 import Library from './components/Library';
 import Controls from './components/Controls';
+import Navigation from "./components/Navigation";
 
 export default {
   name: 'App',
   components: {
+    Navigation,
     Controls,
     Library
   },
@@ -43,6 +48,12 @@ export default {
     display: block;
     position: absolute;
     height: 100%;
+  }
+  .nav-parent-container{
+    position: relative;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
   }
   .library-parent-container{
     position: relative;
