@@ -52,7 +52,7 @@ export default {
             console.log(path.join(testFolder,'../../../..','src/assets/songs/',file))
 
 
-            new jsmediatags.Reader(testFolder+"/"+file).setTagsToRead(["title", "artist", "picture", "lyrics"]).read({
+            new jsmediatags.Reader(testFolder+"/"+file).setTagsToRead(["title", "artist", "picture"]).read({
               onSuccess: function(tag) {
 
                 let tags = tag.tags;
