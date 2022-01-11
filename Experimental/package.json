@@ -1,11 +1,16 @@
 {
-  "name": "vue3-electron",
+  "name": "music-app",
   "version": "0.1.0",
   "private": true,
+  "author": "Tommy Webb <tommygeorgewebb@googlemail.com>",
+  "description": "This is a music application",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder",
+    "electron": "vue-cli-service build & electron .",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
@@ -14,25 +19,31 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
-    "jsmediatags": "3.8.1",
+    "electron-json-storage": "^4.5.0",
+    "electron-package": "^0.1.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-reloader": "^1.2.1",
+    "jsmediatags": "^3.9.7",
     "lottie-web": "^5.8.1",
-    "musicmetadata": "^2.0.5",
+    "nedb": "^1.8.0",
     "path": "^0.12.7",
-    "tiny-emitter": "^2.1.0",
-    "vue": "^3.0.0",
-    "walkdir": "^0.4.1"
+    "sound-play": "^1.1.0",
+    "vue": "^2.6.11",
+    "walkdir": "^0.4.1",
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
-    "electron": "^16.0.6",
+    "electron": "^15.3.1",
+    "electron-builder": "^22.14.5",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -40,7 +51,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "eslint:recommended"
     ],
     "parserOptions": {
@@ -52,5 +63,7 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/Orakeshi/Electron-MusicApp.git"
 }
