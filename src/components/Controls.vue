@@ -1,10 +1,10 @@
 <template>
   <div id="audio-player-container">
-    <audio id="audio-player-test" src="https://assets.codepen.io/4358584/Anitek_-_Komorebi.mp3" preload="metadata" loop>
+    <audio id="audio-player-test" src="" preload="metadata" loop>
       <source id="audioSource" src="">
     </audio>
     <div id="img-container">
-      <img id="song-img" src="https://i.imgur.com/ajkNVge.png">
+      <img id="song-img" src="../../public/images/Orakeshi.png">
     </div>
     <div id="song-name-container">
       <p id="song-name">Persona 4 song</p>
@@ -34,7 +34,9 @@
 </template>
 
 <script>
+  const path = window.require("path")
   const lottieWeb = window.require("lottie-web")
+
   window.addEventListener('load', function () {
     const playIconContainer = document.getElementById('play-icon');
     const audioPlayerContainer = document.getElementById('audio-player-container');
@@ -46,7 +48,7 @@
 
     const playAnimation = lottieWeb.loadAnimation({
       container: playIconContainer,
-      path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/pause/pause.json',
+      path: path.join('../','public/pause.json'),
       renderer: 'svg',
       loop: false,
       autoplay: false,
@@ -55,7 +57,7 @@
 
     const muteAnimation = lottieWeb.loadAnimation({
       container: muteIconContainer,
-      path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/mute/mute.json',
+      path: path.join('../','public/mute.json'),
       renderer: 'svg',
       loop: false,
       autoplay: false,
@@ -404,9 +406,6 @@
     transform: scale(1.2);
     background: #007db5;
   }
-
-
-
 
   /* NO MY STYLES */
   body {
