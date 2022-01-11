@@ -5,7 +5,7 @@
         <p>Library</p>
       </div>
     </div>
-    <div @click="showContainer('playlists')" id="playlists-nav" class="nav-parent-element">
+    <div @click="showContainer('playlists')" id="playlist-nav" class="nav-parent-element">
       <div class="nav-text-parent">
         <p>Playlists</p>
       </div>

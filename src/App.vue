@@ -6,6 +6,12 @@
     <div id="library-container" class="library-parent-container">
       <Library></Library>
     </div>
+    <div id="playlists-container" class="playlists-parent-container">
+      <Playlists></Playlists>
+    </div>
+    <div id="settings-container" class="settings-parent-container">
+      <Settings></Settings>
+    </div>
     <div class="divider">
 
     </div>
@@ -20,91 +26,148 @@
 import Library from './components/Library';
 import Controls from './components/Controls';
 import Navigation from "./components/Navigation";
+import Playlists from "./components/Playlists";
+import Settings from "./components/Settings";
 
 export default {
   name: 'App',
   components: {
+    Settings,
+    Playlists,
     Navigation,
     Controls,
     Library
   },
   mounted() {
-    let currentState = true;
     let completingInstruction = false;
+    let currentClicked = false;
+
 
     let libraryContainer = document.getElementById("library-container");
     let libraryNav =  document.getElementById("library-nav");
 
-    //let playlistContainer = document.getElementById("playlists-container");
-    //let settingsContainer = document.getElementById("settings-container");
+    let settingsContainer = document.getElementById("settings-container");
+    let settingsNav = document.getElementById("settings-nav");
+
+    let playlistsContainer = document.getElementById("playlists-container");
+    let playlistsNav = document.getElementById("playlist-nav");
+
+    let currentElement = libraryContainer;
+    let currentNav = libraryNav;
+
+    function hideElement(element){
+      if(completingInstruction){
+        return;
+      }
+      completingInstruction = true
+      //Check if animation on element, if not play the animation
+      if (element.classList.contains("fade-in")) {
+        element.classList.remove("fade-in");
+      }
+
+      libraryContainer.classList.toggle("fade-out");
+
+      // Wait animation time (200ms) and remove container from html
+      setTimeout(()=> {
+        element.style.display = "none";
+        completingInstruction = false;
+      }, 200);
+
+    }
+
+    function showElement(element, nav){
+      currentElement = element
+      currentNav = nav;
+
+      if(completingInstruction){
+        return;
+      }
+      completingInstruction = true
+      // Play fade out animation
+      if (element.classList.contains("fade-out")) {
+        element.classList.remove("fade-out");
+      }
+
+      // Place library container back in view
+      element.style.display = "block";
+      element.classList.toggle("fade-in");
+      completingInstruction = false;
+    }
+
+    function resetElement(element, nav){
+      hideElement(element, nav)
+      nav.style.backgroundColor="#808E9B";
+    }
 
     this.$root.$on('showContent', (itemToShow) => {
 
       // your code goes here
       if(itemToShow == "library"){
-        if(currentState){
-          // Handles controlling if the animation plays if button clicked multiple times
-          if(completingInstruction){
-            return;
-          }
-          completingInstruction = true
-
-          // Change tab colour of the library nav container
-          libraryNav.style.backgroundColor="#808E9B";
-
-          //Check if animation on element, if not play the animation
-          if (libraryContainer.classList.contains("fade-in")) {
-            libraryContainer.classList.remove("fade-in");
-          }
-          libraryContainer.classList.toggle("fade-out");
-
-          // Wait animation time (200ms) and remove container from html
+        if(currentClicked){
+          return;
+        }
+        currentClicked = true
+        libraryNav.style.backgroundColor="#485460";
+        console.log(currentElement.id)
+        if(currentElement.id=="library-container"){
+          console.log("library already on screen")
+          currentClicked = false;
+          return
+        }
+        else{
+          console.log("library now showing")
+          resetElement(currentElement, currentNav);
           setTimeout(()=> {
-            libraryContainer.style.display = "none";
-            completingInstruction = false;
-          }, 200);
+            showElement(libraryContainer, libraryNav)
+          }, 300)
+          currentClicked = false;
+        }
 
+      }
+
+      if(itemToShow == "playlists"){
+        if(currentClicked){
+          return;
+        }
+        currentClicked = true;
+        playlistsNav.style.backgroundColor="#485460";
+        if(currentElement.id=="playlists-container"){
+          console.log("playlist already on screen")
+          currentClicked = false;
+          return
         }
         else{
-          if(completingInstruction){
-            return;
-          }
-          completingInstruction = true
+          console.log("playlist now showing")
+          resetElement(currentElement, currentNav);
+          setTimeout(()=> {
+            showElement(playlistsContainer, playlistsNav)
+          }, 300)
+          currentClicked = false;
+        }
 
-          // Play fade out animation
-          if (libraryContainer.classList.contains("fade-out")) {
-            libraryContainer.classList.remove("fade-out");
-          }
 
-          // Place library container back in view
-          libraryContainer.style.display = "block";
-          libraryNav.style.backgroundColor="#485460";
-          libraryContainer.classList.toggle("fade-in");
-          completingInstruction = false;
-        }
-        currentState = !currentState;
       }
-      else if(itemToShow == "playlists"){
-        if(currentState){
-          document.getElementById("library-container").style.display = "none";
-          document.getElementById("library-nav").style.backgroundColor="#808E9B";
-        }
-        else{
-          document.getElementById("library-container").style.display = "block";
-          document.getElementById("library-nav").style.backgroundColor="#485460";
-        }
-        currentState = !currentState;
-      }
+
       if(itemToShow == "settings"){
-        if(currentState){
-          document.getElementById("library-container").style.display = "none";
-          document.getElementById("library-nav").style.backgroundColor="#808E9B";
+        if(currentClicked){
+          return;
+        }
+        currentClicked = true;
+        settingsNav.style.backgroundColor="#485460";
+        if(currentElement.id=="settings-container"){
+          console.log("settings already on screen")
+          currentClicked = false;
+          return
         }
         else{
-          document.getElementById("library-container").style.display = "block";
-          document.getElementById("library-nav").style.backgroundColor="#485460";
+          console.log("settings now showing")
+          resetElement(currentElement, currentNav);
+          setTimeout(()=> {
+            showElement(settingsContainer, settingsNav)
+          }, 300)
+          currentClicked = false;
         }
-        currentState = !currentState;
+
       }
 
     })
@@ -139,6 +202,13 @@ export default {
     top: 0;
     overflow: hidden;
   }
+  #settings-container{
+    display: none;
+  }
+  #playlists-container{
+    display: none;
+  }
+
   .library-parent-container{
     position: relative;
     height: 75%;
