@@ -1,16 +1,22 @@
 <template>
   <div class="nav-container">
-    <div @click="testMethod('library')" id="library-nav" class="nav-parent-element">
-      <p>Library</p>
+    <div @click="showContainer('library')" id="library-nav" class="nav-parent-element">
+      <div class="nav-text-parent">
+        <p>Library</p>
+      </div>
     </div>
-    <div id="playlist-nav" class="nav-parent-element">
-      <p>Playlists</p>
+    <div @click="showContainer('playlists')" id="playlists-nav" id="playlist-nav" class="nav-parent-element">
+      <div class="nav-text-parent">
+        <p>Playlists</p>
+      </div>
     </div>
-    <div id="settings-nav" class="nav-parent-element">
-      <p>Settings</p>
+    <div @click="showContainer('settings')" id="settings-nav" id="settings-nav" class="nav-parent-element">
+      <div class="nav-text-parent">
+        <p>Settings</p>
+      </div>
     </div>
-    <div class="nav-parent-element">
-      <p>Logo</p>
+    <div id="logo-nav" class="nav-parent-element">
+      <img src="../../public/images/Logo.png">
       <!--      img will go here of logo-->
     </div>
 
@@ -21,7 +27,7 @@
 export default {
   name: "Navigation",
   methods: {
-    testMethod: function(containerName){
+    showContainer: function(containerName){
       this.$root.$emit('showContent', containerName) //like this
     },
   }
@@ -44,6 +50,7 @@ export default {
   table-layout: fixed;
 }
 .nav-parent-element{
+  position: relative;
   height: 10px;
   background-color: #808E9B;
   margin: 5px;
@@ -51,9 +58,38 @@ export default {
   border: 2px solid #1E272E;
   padding: 4px 6px;
   width: 2%;
+  cursor: pointer;
 }
-p{
-  font-size: 12px;
+.nav-text-parent{
+  height: auto;
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  border: 1px solid yellow;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.nav-text-parent p{
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid green;
+  height: 100%;
+  width: 100%;
   color: white;
+  text-align: center;
+}
+#library-nav{
+  background-color: #485460;
+}
+#logo-nav{
+  background-color: #1E272E;
+}
+#logo-nav img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
