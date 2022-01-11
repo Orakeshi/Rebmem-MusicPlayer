@@ -5,12 +5,12 @@
         <p>Library</p>
       </div>
     </div>
-    <div @click="showContainer('playlists')" id="playlists-nav" id="playlist-nav" class="nav-parent-element">
+    <div @click="showContainer('playlists')" id="playlists-nav" class="nav-parent-element">
       <div class="nav-text-parent">
         <p>Playlists</p>
       </div>
     </div>
-    <div @click="showContainer('settings')" id="settings-nav" id="settings-nav" class="nav-parent-element">
+    <div @click="showContainer('settings')" id="settings-nav" class="nav-parent-element">
       <div class="nav-text-parent">
         <p>Settings</p>
       </div>

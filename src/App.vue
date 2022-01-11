@@ -3,7 +3,7 @@
     <div class="nav-parent-container">
       <Navigation></Navigation>
     </div>
-    <div id="library-container" class="library-parent-container slider close">
+    <div id="library-container" class="library-parent-container">
       <Library></Library>
     </div>
     <div class="divider">
@@ -30,8 +30,11 @@ export default {
   },
   mounted() {
     let currentState = true;
+    let completingInstruction = false;
 
     let libraryContainer = document.getElementById("library-container");
+    let libraryNav =  document.getElementById("library-nav");
+
     //let playlistContainer = document.getElementById("playlists-container");
     //let settingsContainer = document.getElementById("settings-container");
 
@@ -40,17 +43,44 @@ export default {
       // your code goes here
       if(itemToShow == "library"){
         if(currentState){
-          libraryContainer.style.backgroundColor="#808E9B";
+          // Handles controlling if the animation plays if button clicked multiple times
+          if(completingInstruction){
+            return;
+          }
+          completingInstruction = true
+
+          // Change tab colour of the library nav container
+          libraryNav.style.backgroundColor="#808E9B";
+
+          //Check if animation on element, if not play the animation
+          if (libraryContainer.classList.contains("fade-in")) {
+            libraryContainer.classList.remove("fade-in");
+          }
           libraryContainer.classList.toggle("fade-out");
+
+          // Wait animation time (200ms) and remove container from html
           setTimeout(()=> {
             libraryContainer.style.display = "none";
-          }, 1000);
+            completingInstruction = false;
+          }, 200);
 
         }
         else{
+          if(completingInstruction){
+            return;
+          }
+          completingInstruction = true
+
+          // Play fade out animation
+          if (libraryContainer.classList.contains("fade-out")) {
+            libraryContainer.classList.remove("fade-out");
+          }
+
+          // Place library container back in view
           libraryContainer.style.display = "block";
-          document.getElementById("library-nav").style.backgroundColor="#485460";
+          libraryNav.style.backgroundColor="#485460";
           libraryContainer.classList.toggle("fade-in");
+          completingInstruction = false;
         }
         currentState = !currentState;
       }
@@ -111,9 +141,28 @@ export default {
   }
   .library-parent-container{
     position: relative;
-    height: 85%;
+    height: 75%;
     overflow: auto;
+
   }
+  .library-parent-container::-webkit-scrollbar {
+    width: 20px;
+  }
+  .library-parent-container::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+  }
+  .library-parent-container::-webkit-scrollbar-thumb {
+    background-color: #808E9B;
+    border-radius: 6px;
+    border: 4px solid rgba(0,0,0,0);
+    background-clip: content-box;
+    min-width: 32px;
+    min-height: 32px;
+  }
+  .library-parent-container::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0);
+  }
+
   .controls-parent-container{
     position: fixed;
     height: 80px;
@@ -125,11 +174,11 @@ export default {
 
   /* CSS ANIMATIONS */
   .fade-in {
-    animation: fadeIn ease 1s;
-    -webkit-animation: fadeIn ease 1s;
-    -moz-animation: fadeIn ease 1s;
-    -o-animation: fadeIn ease 1s;
-    -ms-animation: fadeIn ease 1s;
+    animation: fadeIn ease 0.2s;
+    -webkit-animation: fadeIn ease 0.2s;
+    -moz-animation: fadeIn ease 0.2s;
+    -o-animation: fadeIn ease 0.2s;
+    -ms-animation: fadeIn ease 0.2s;
   }
   @keyframes fadeIn {
     0% {
@@ -177,11 +226,11 @@ export default {
   }
 
   .fade-out {
-    animation: fadeOut ease 1s;
-    -webkit-animation: fadeOut ease 1s;
-    -moz-animation: fadeOut ease 1s;
-    -o-animation: fadeOut ease 1s;
-    -ms-animation: fadeOut ease 1s;
+    animation: fadeOut ease 0.2s;
+    -webkit-animation: fadeOut ease 0.2s;
+    -moz-animation: fadeOut ease 0.2s;
+    -o-animation: fadeOut ease 0.2s;
+    -ms-animation: fadeOut ease 0.2s;
   }
   @keyframes fadeOut {
     0% {

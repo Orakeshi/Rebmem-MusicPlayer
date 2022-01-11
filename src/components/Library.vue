@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import Button from './Button'
 import Songs from './Songs';
 
 const fs = window.require("fs")
@@ -27,7 +26,6 @@ export default {
     title: String,
   },
   components: {
-    Button,
     Songs
   },
   data(){
@@ -53,6 +51,7 @@ export default {
             }
             console.log(path.join(testFolder,'../../../..','src/assets/songs/',file))
 
+
             new jsmediatags.Reader(testFolder+"/"+file).setTagsToRead(["title", "artist", "picture", "lyrics"]).read({
               onSuccess: function(tag) {
 
@@ -60,20 +59,21 @@ export default {
 
                 let base64String = "";
 
-                for (let i = 0; i < tags.picture.data.length; i++) {
-                  base64String += String.fromCharCode(tags.picture.data[i]);
+                try {
+                  for (let i = 0; i < tags.picture.data.length; i++) {
+                    base64String += String.fromCharCode(tags.picture.data[i]);
+                  }
+                  newSong.imgdata = "data:" + tags.picture.format + ";base64," + window.btoa(base64String)
+                  newSong.title = tags.title;
+                  newSong.artist = tags.artist;
                 }
-                let dataUrl = "data:" + tags.picture.format + ";base64," + window.btoa(base64String);
-                newSong.imgdata = dataUrl
-                newSong.title = tags.title;
-                newSong.artist = tags.artist;
+                catch (err){
+                  console.log(err);
+                  newSong.imgdata = "https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png"
+                  newSong.title = file.substring(0, file.length - 4);
+                  newSong.artist = "N/A";
+                }
               },
-              onError: function(error) {
-                console.log(':(', error.type, error.info);
-                newSong.imgdata = "https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png"
-                newSong.title = file;
-                newSong.artist = "N/A";
-              }
             });
 
             this.songs.push(newSong);
@@ -100,7 +100,8 @@ header {
 .library-songs-container{
   width: 100%;
   height: 100%;
-  display: block;
+  display: flex;
+  justify-content: center;
   background: #485460;
 }
 
