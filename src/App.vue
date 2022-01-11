@@ -92,6 +92,7 @@ export default {
       element.style.display = "block";
       element.classList.toggle("fade-in");
       completingInstruction = false;
+      currentClicked = false;
     }
 
     function resetElement(element, nav){
@@ -120,7 +121,6 @@ export default {
           setTimeout(()=> {
             showElement(libraryContainer, libraryNav)
           }, 300)
-          currentClicked = false;
         }
 
       }
@@ -142,7 +142,6 @@ export default {
           setTimeout(()=> {
             showElement(playlistsContainer, playlistsNav)
           }, 300)
-          currentClicked = false;
         }
 
 
@@ -165,7 +164,6 @@ export default {
           setTimeout(()=> {
             showElement(settingsContainer, settingsNav)
           }, 300)
-          currentClicked = false;
         }
 
       }
