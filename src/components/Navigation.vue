@@ -1,12 +1,12 @@
 <template>
   <div class="nav-container">
-    <div class="nav-parent-element">
+    <div @click="testMethod('library')" id="library-nav" class="nav-parent-element">
       <p>Library</p>
     </div>
-    <div class="nav-parent-element">
+    <div id="playlist-nav" class="nav-parent-element">
       <p>Playlists</p>
     </div>
-    <div class="nav-parent-element">
+    <div id="settings-nav" class="nav-parent-element">
       <p>Settings</p>
     </div>
     <div class="nav-parent-element">
@@ -19,26 +19,38 @@
 
 <script>
 export default {
-  name: "Navigation"
+  name: "Navigation",
+  methods: {
+    testMethod: function(containerName){
+      this.$root.$emit('showContent', containerName) //like this
+    },
+  }
+
 }
 </script>
 
 <style scoped>
 .nav-container{
-  position: relative;
-  margin: 0;
+  position: absolute;
+  height: 60px;
+  max-height: 60px;
   width: 100%;
-  height: 100px;
-  display: inline-block;
+  top: 0;
+  overflow: hidden;
+  margin: 0;
   background-color: #1E272E;
-  padding: 3px;
+  padding: 1px;
+  display: table;
+  table-layout: fixed;
 }
 .nav-parent-element{
-  height: 50px;
-  width: 24.5%;
-  display: inline-block;
+  height: 10px;
   background-color: #808E9B;
-  margin-left: 2px;
+  margin: 5px;
+  display: table-cell;
+  border: 2px solid #1E272E;
+  padding: 4px 6px;
+  width: 2%;
 }
 p{
   font-size: 12px;

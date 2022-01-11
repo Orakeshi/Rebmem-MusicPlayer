@@ -1,8 +1,5 @@
 <template>
   <div class="library-songs-container">
-    <header>
-      <h1>{{ title }}</h1>
-    </header>
     <Songs :songs="songs"></Songs>
     <div class="controls-blocker">
 

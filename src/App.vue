@@ -3,8 +3,8 @@
     <div class="nav-parent-container">
       <Navigation></Navigation>
     </div>
-    <div class="library-parent-container">
-      <Library title="Library"></Library>
+    <div id="library-container" class="library-parent-container">
+      <Library></Library>
     </div>
     <div class="divider">
 
@@ -28,6 +28,23 @@ export default {
     Controls,
     Library
   },
+  mounted() {
+    let currentState = true;
+    this.$root.$on('showContent', (itemToShow) => {
+
+      // your code goes here
+      if(itemToShow == "library"){
+        if(currentState){
+          document.getElementById("library-container").style.display = "none";
+        }
+        else{
+          document.getElementById("library-container").style.display = "block";
+        }
+        currentState = !currentState;
+      }
+
+    })
+  }
 }
 </script>
 
@@ -46,13 +63,16 @@ export default {
   }
   .container{
     display: block;
+    width: 100%;
     position: absolute;
     height: 100%;
   }
   .nav-parent-container{
     position: relative;
-    height: 100px;
+    height: 60px;
+    max-height: 60px;
     width: 100%;
+    top: 0;
     overflow: hidden;
   }
   .library-parent-container{
