@@ -1,7 +1,7 @@
 <template>
   <!-- Iterate through songs and create a song component for each song-->
   <div class="songs-container">
-    <div class="song-item" v-for="song in songs" :id="song.id" :key="song.id">
+    <div class="song-item" v-for="song in songs" :key="song.id">
       <Song :song="song"></Song>
     </div>
   </div>

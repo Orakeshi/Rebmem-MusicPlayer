@@ -2,12 +2,12 @@
   <!-- vue on click used to iterate through each song data and create div elements -->
   <div v-on:click="playSong" class="song">
     <div class="song-img">
-      <img id="set-src" v-bind:src="song.imgdata">
+      <img v-bind:src="song.imgdata">
     </div>
 
     <div class="song-name" id="song-name-container">
       <div id="song-text-parent">
-        <p>{{song.title}}</p>
+        <p>{{ song.title }}</p>
       </div>
     </div>
 
@@ -16,26 +16,19 @@
 </template>
 
 <script>
-const path = window.require("path")
-const os = window.require("os").homedir()
-const songFolder = path.join(os, 'Music')
-
 export default {
   name: "Song",
   props: {
     song: Object
   },
-
   methods: {
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
       console.log("DOING")
       //console.log(this.song.artist)
-      console.log("HOWDY: "+songFolder+"/"+this.song.audiosrc);
-      //document.getElementById("audio-player-test").crossOrigin = 'anonymous'
-      document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
+      console.log("HOWDY: "+this.song.audiosrc);
+      document.getElementById("audio-player-test").setAttribute("src", this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
-      console.log(this.song.imgdata);
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
     }

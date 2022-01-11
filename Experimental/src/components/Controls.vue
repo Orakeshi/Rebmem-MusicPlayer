@@ -1,8 +1,8 @@
 <template>
   <!-- Audio Player container -->
   <div id="audio-player-container">
-    <audio id="audio-player-test" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata" loop>
-      <source id="audioSource" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+    <audio id="audio-player-test" src="" preload="metadata" loop>
+      <source id="audioSource" src="">
     </audio>
     <!-- Current image of the song that is being played -->
     <div id="img-container">
@@ -13,13 +13,11 @@
       <p id="song-name"></p>
     </div>
     <div id="play-icon-container">
-<!--      <button id="play-icon"></button>-->
-      <img id="play-icon" src="../../public/images/pause-icon.png">
+      <button id="play-icon"></button>
     </div>
     <!-- Container for the volume of the application -->
     <div id="volume-container">
-<!--      <button id="mute-icon"></button>-->
-      <img id="mute-icon" src="../../public/images/pause-icon.png">
+      <button id="mute-icon"></button>
       <div id="volume-controls-container">
         <output id="volume-output">100</output>
         <input class="slider-input" type="range" id="volume-slider" max="100" value="100">
@@ -40,7 +38,8 @@
 
 <script>
   // NPM packages needed for the application
-
+  const path = window.require("path")
+  const lottieWeb = window.require("lottie-web")
   // Wait until window is loaded
   window.addEventListener('load', function () {
     // Store all HTML elements in varaibles for access at later date
@@ -51,6 +50,27 @@
     const muteIconContainer = document.getElementById('mute-icon');
     let playState = 'play';
     let muteState = 'unmute';
+
+    // Animations for both the play and pause button + the mute button
+    const playAnimation = lottieWeb.loadAnimation({
+      container: playIconContainer,
+      path: path.join('../','public/pause.json'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      name: "Play Animation",
+    });
+
+    const muteAnimation = lottieWeb.loadAnimation({
+      container: muteIconContainer,
+      path: path.join('../','public/mute.json'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      name: "Mute Animation",
+    });
+
+    playAnimation.goToAndStop(14, true);
 
     /***
      * changeSong is responsbile for bypassing the animation
@@ -63,13 +83,12 @@
       }
       if(playState === 'play') {
         audio.play();
-
-        //playAnimation.playSegments([14, 27], true);
+        playAnimation.playSegments([14, 27], true);
         requestAnimationFrame(whilePlaying);
         playState = 'pause';
       } else {
         audio.pause();
-        //playAnimation.playSegments([0, 14], true);
+        playAnimation.playSegments([0, 14], true);
         cancelAnimationFrame(raf);
         playState = 'play';
       }
@@ -82,11 +101,11 @@
 
     muteIconContainer.addEventListener('click', () => {
       if(muteState === 'unmute') {
-        //muteAnimation.playSegments([0, 15], true);
+        muteAnimation.playSegments([0, 15], true);
         audio.muted = true;
         muteState = 'mute';
       } else {
-        //muteAnimation.playSegments([15, 25], true);
+        muteAnimation.playSegments([15, 25], true);
         audio.muted = false;
         muteState = 'unmute';
       }
@@ -130,15 +149,10 @@
 
     const displayBufferedAmount = () => {
       audio.onprogress = function (){
-        let bufferedAmount;
-        if(audio.buffered.length>0){
-          bufferedAmount = audio.buffered.end(0)
-        }
-        else{
-          bufferedAmount = audio.buffered.start(0)
-        }
+        const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
         audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
       }
+
     }
 
     const whilePlaying = () => {

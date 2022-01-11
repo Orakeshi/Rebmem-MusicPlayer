@@ -26,7 +26,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Navigation",
   methods: {
@@ -36,8 +35,7 @@ export default {
      * @param containerName
      */
     showContainer: function(containerName){
-      window.emitter.emit('showContent', containerName)
-      // this.$root.$emit('showContent', containerName) //like this
+      this.$root.$emit('showContent', containerName) //like this
     },
   }
 
