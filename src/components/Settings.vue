@@ -1,6 +1,7 @@
 <template>
   <div class="settings-parent">
     <h1>SETTINGS</h1>
+    <p>Coming Soon! Currently being worked on</p>
   </div>
 </template>
 
@@ -11,6 +12,13 @@ export default {
 </script>
 
 <style scoped>
+  h1{
+    color: white;
+  }
+  p{
+    color: white;
+    font-size: 18px;
+  }
   .settings-parent{
     height: 100%;
     width: 100%;

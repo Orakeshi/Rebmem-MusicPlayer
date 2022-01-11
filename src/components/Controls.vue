@@ -84,7 +84,7 @@
     };
 
     playIconContainer.addEventListener('click', () => {
-      changeSong();
+      window.changeSong();
     })
 
 
@@ -222,7 +222,6 @@
     height: 35px;
     margin: auto;
     width: 35px;
-    border: 3px solid green;
   }
   #play-icon {
     width: 35px;
@@ -255,7 +254,6 @@
     left: 50%;
     transform: translateX(-50%);
     margin: 0 auto;
-    border: 3px solid red;
   }
 
 
@@ -268,7 +266,6 @@
     /*margin: 30px 2.5% 20px 2.5%;*/
     /*margin: 0 auto;*/
     outline: none;
-    border: 3px solid blue;
     background-color: #1E272E;
   }
 
@@ -279,7 +276,6 @@
     top: 0;
     height: 35px;
     width: 200px;
-    border: 3px solid green;
   }
   #volume-slider {
     position: relative;
@@ -289,7 +285,6 @@
     /*margin: 30px 2.5% 20px 2.5%;*/
     /*margin: 0 auto;*/
     outline: none;
-    border: 3px solid blue;
     /*margin: 10px 2.5%;*/
     top: 0;
     width: 70%;
@@ -299,27 +294,30 @@
   }
   #mute-icon {
     position: relative;
-    left: 0;
     width: 35px;
     height: 35px;
-    /*float: left;*/
-    margin: 0;
-    border: 3px solid orange;
-    /*margin: 0 2.5%;*/
+    margin-left: 15px;
   }
   #volume-output{
     position: relative;
     font-size: 15px;
-    display: block;
-    border: 3px solid yellow;
+  }
+  output {
+    display: inline-block;
+    width: 32px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 2px;
+    float: left;
+    clear: left;
+    color: white;
   }
   #volume-controls-container{
     position: absolute;
     margin: 0;
     right: 0;
-    top: 0;
+    top: 8px;
     width: 150px;
-    border: 3px solid purple;
   }
 
   .slider-input::-webkit-slider-runnable-track {
@@ -446,21 +444,13 @@
     width: auto;
     text-align: center;
     font-size: 15px;
-    margin: 0px 10px 0px;
+    margin-left: 10px;
+    margin-right: 10px;
     color: white;
-    /*margin: 28.5px 0 18.5px 0;*/
+    top: -25%;
+    transform: translateY(25%);
   }
-  output {
-    display: inline-block;
-    width: 32px;
-    text-align: center;
-    font-size: 20px;
-    /*margin: 10px 2.5% 0 5%;*/
-    float: left;
-    clear: left;
-    color: white;
-    margin: 0 auto;
-  }
+
 
   #volume-slider::-webkit-slider-runnable-track {
     background: rgba(0, 125, 181, 0.6);

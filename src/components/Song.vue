@@ -24,14 +24,14 @@ export default {
     song: Object
   },
   methods: {
-    playSong: function(event){
+    playSong: function(){
       console.log("DOING")
       //console.log(this.song.artist)
       console.log("HOWDY: "+this.song.audiosrc);
       document.getElementById("audio-player-test").setAttribute("src", this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
-      changeSong('play')
+      window.changeSong('play')
     }
   },
   /*data: function (){
@@ -51,7 +51,6 @@ export default {
   height: 100%;
   background: #1E272E;
   cursor: pointer;
-  border: 1px solid red;
 }
 .song-img{
   position: relative;
@@ -65,7 +64,6 @@ export default {
 
 .song-name {
   position: relative;
-  border: blue 1px solid;
   height: 25%;
   width: 100%;
   margin: 0 auto;
@@ -76,7 +74,6 @@ export default {
   width: 100%;
   margin: 0;
   position: absolute;
-  border: 1px solid yellow;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
@@ -86,7 +83,6 @@ export default {
   margin: 0;
   font-size: 13px;
   font-weight: bold;
-  border: 1px solid green;
   height: 100%;
   width: 100%;
   color: white;
