@@ -16,7 +16,7 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
-  "main": "./electron.js",
+  "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "electron-json-storage": "^4.5.0",

@@ -4,18 +4,18 @@ module.exports = {
     pluginOptions: {
         electronBuilder: {
             builderOptions: {
-                "build": {
-                    "appId": "MyApp",
-                    "mac": {
-                        "category": "your.app.category.type"
-                    },
-                    "extends": null,
-                    "files": [
-                        "*.js",
-                        "build",
-                        "node_modules"
-                    ]
-                }
+                "appId": "MyApp",
+                "mac": {
+                    "category": "your.app.category.type"
+                },
+                "directories": {
+                    "buildResources": "resources",
+                    "output": "release"
+                },
+                "extends": null,
+                "files": [
+                    "**/*"
+                ],
             }
         }
     }

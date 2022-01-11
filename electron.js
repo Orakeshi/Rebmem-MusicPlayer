@@ -1,4 +1,13 @@
-const { app, BrowserWindow, ipcMain, dialog  } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, protocol  } = require('electron')
+const {createProtocol} = require('vue-cli-plugin-electron-builder/lib');
+const {installExtension, VUEJS_DEVTOOLS} = require('electron-devtools-installer');
+const path = require('path');
+const url = require('url');
+const isDevelopment = process.env.NODE_ENV !== 'production'
+// Scheme must be registered before the app is ready
+protocol.registerSchemesAsPrivileged([
+    { scheme: 'app', privileges: { secure: true, standard: true } }
+])
 
 try {
 // Enable live reload for all the files inside your project directory
