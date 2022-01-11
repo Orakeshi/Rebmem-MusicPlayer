@@ -1,4 +1,5 @@
 <template>
+  <!-- Containers for all the components that need to show to make up the application -->
   <div class="container">
     <div class="nav-parent-container">
       <Navigation></Navigation>
@@ -23,157 +24,173 @@
 </template>
 
 <script>
-import Library from './components/Library';
-import Controls from './components/Controls';
-import Navigation from "./components/Navigation";
-import Playlists from "./components/Playlists";
-import Settings from "./components/Settings";
+  // Import all VUE components needed
+  import Library from './components/Library';
+  import Controls from './components/Controls';
+  import Navigation from "./components/Navigation";
+  import Playlists from "./components/Playlists";
+  import Settings from "./components/Settings";
 
-export default {
-  name: 'App',
-  components: {
-    Settings,
-    Playlists,
-    Navigation,
-    Controls,
-    Library
-  },
-  mounted() {
-    let completingInstruction = false;
-    let currentClicked = false;
+  export default {
+    name: 'App',
+    components: {
+      Settings,
+      Playlists,
+      Navigation,
+      Controls,
+      Library
+    },
+    mounted() {
+      // Store all elements to be accesed in variables
+      let completingInstruction = false;
+      let currentClicked = false;
 
+      let libraryContainer = document.getElementById("library-container");
+      let libraryNav =  document.getElementById("library-nav");
 
-    let libraryContainer = document.getElementById("library-container");
-    let libraryNav =  document.getElementById("library-nav");
+      let settingsContainer = document.getElementById("settings-container");
+      let settingsNav = document.getElementById("settings-nav");
 
-    let settingsContainer = document.getElementById("settings-container");
-    let settingsNav = document.getElementById("settings-nav");
+      let playlistsContainer = document.getElementById("playlists-container");
+      let playlistsNav = document.getElementById("playlist-nav");
 
-    let playlistsContainer = document.getElementById("playlists-container");
-    let playlistsNav = document.getElementById("playlist-nav");
+      let currentElement = libraryContainer;
+      let currentNav = libraryNav;
 
-    let currentElement = libraryContainer;
-    let currentNav = libraryNav;
+      /***
+       * function is responsible for hiding any given element and playing an animation on the element
+       * @param element
+       */
+      function hideElement(element){
+        if(completingInstruction){
+          return;
+        }
+        completingInstruction = true
+        //Check if animation on element, if not play the animation
+        if (element.classList.contains("fade-in")) {
+          element.classList.remove("fade-in");
+        }
 
-    function hideElement(element){
-      if(completingInstruction){
-        return;
+        libraryContainer.classList.toggle("fade-out");
+
+        // Wait animation time (200ms) and remove container from html
+        setTimeout(()=> {
+          element.style.display = "none";
+          completingInstruction = false;
+        }, 200);
+
       }
-      completingInstruction = true
-      //Check if animation on element, if not play the animation
-      if (element.classList.contains("fade-in")) {
-        element.classList.remove("fade-in");
-      }
 
-      libraryContainer.classList.toggle("fade-out");
+      /***
+       * Function is responsbile for showing any element with a fade animation
+       * @param element
+       * @param nav
+       */
+      function showElement(element, nav){
+        currentElement = element
+        currentNav = nav;
 
-      // Wait animation time (200ms) and remove container from html
-      setTimeout(()=> {
-        element.style.display = "none";
+        if(completingInstruction){
+          return;
+        }
+        completingInstruction = true
+        // Play fade out animation
+        if (element.classList.contains("fade-out")) {
+          element.classList.remove("fade-out");
+        }
+
+        // Place library container back in view
+        element.style.display = "block";
+        element.classList.toggle("fade-in");
         completingInstruction = false;
-      }, 200);
+        currentClicked = false;
+      }
 
+      /***
+       * method handles resetting a given element. the hideElement function is played
+       * @param element
+       * @param nav
+       */
+      function resetElement(element, nav){
+        hideElement(element, nav)
+        nav.style.backgroundColor="#808E9B";
+      }
+
+      this.$root.$on('showContent', (itemToShow) => {
+
+        // Conditionals to check what container has been clicked
+        if(itemToShow == "library"){
+          if(currentClicked){
+            return;
+          }
+          currentClicked = true
+          libraryNav.style.backgroundColor="#485460";
+          console.log(currentElement.id)
+          if(currentElement.id=="library-container"){
+            console.log("library already on screen")
+            currentClicked = false;
+            return
+          }
+          else{
+            console.log("library now showing")
+            resetElement(currentElement, currentNav);
+            setTimeout(()=> {
+              showElement(libraryContainer, libraryNav)
+            }, 300)
+          }
+
+        }
+
+        if(itemToShow == "playlists"){
+          if(currentClicked){
+            return;
+          }
+          currentClicked = true;
+          playlistsNav.style.backgroundColor="#485460";
+          if(currentElement.id=="playlists-container"){
+            console.log("playlist already on screen")
+            currentClicked = false;
+            return
+          }
+          else{
+            console.log("playlist now showing")
+            resetElement(currentElement, currentNav);
+            setTimeout(()=> {
+              showElement(playlistsContainer, playlistsNav)
+            }, 300)
+          }
+
+
+        }
+
+        if(itemToShow == "settings"){
+          if(currentClicked){
+            return;
+          }
+          currentClicked = true;
+          settingsNav.style.backgroundColor="#485460";
+          if(currentElement.id=="settings-container"){
+            console.log("settings already on screen")
+            currentClicked = false;
+            return
+          }
+          else{
+            console.log("settings now showing")
+            resetElement(currentElement, currentNav);
+            setTimeout(()=> {
+              showElement(settingsContainer, settingsNav)
+            }, 300)
+          }
+
+        }
+
+      })
     }
-
-    function showElement(element, nav){
-      currentElement = element
-      currentNav = nav;
-
-      if(completingInstruction){
-        return;
-      }
-      completingInstruction = true
-      // Play fade out animation
-      if (element.classList.contains("fade-out")) {
-        element.classList.remove("fade-out");
-      }
-
-      // Place library container back in view
-      element.style.display = "block";
-      element.classList.toggle("fade-in");
-      completingInstruction = false;
-      currentClicked = false;
-    }
-
-    function resetElement(element, nav){
-      hideElement(element, nav)
-      nav.style.backgroundColor="#808E9B";
-    }
-
-    this.$root.$on('showContent', (itemToShow) => {
-
-      // your code goes here
-      if(itemToShow == "library"){
-        if(currentClicked){
-          return;
-        }
-        currentClicked = true
-        libraryNav.style.backgroundColor="#485460";
-        console.log(currentElement.id)
-        if(currentElement.id=="library-container"){
-          console.log("library already on screen")
-          currentClicked = false;
-          return
-        }
-        else{
-          console.log("library now showing")
-          resetElement(currentElement, currentNav);
-          setTimeout(()=> {
-            showElement(libraryContainer, libraryNav)
-          }, 300)
-        }
-
-      }
-
-      if(itemToShow == "playlists"){
-        if(currentClicked){
-          return;
-        }
-        currentClicked = true;
-        playlistsNav.style.backgroundColor="#485460";
-        if(currentElement.id=="playlists-container"){
-          console.log("playlist already on screen")
-          currentClicked = false;
-          return
-        }
-        else{
-          console.log("playlist now showing")
-          resetElement(currentElement, currentNav);
-          setTimeout(()=> {
-            showElement(playlistsContainer, playlistsNav)
-          }, 300)
-        }
-
-
-      }
-
-      if(itemToShow == "settings"){
-        if(currentClicked){
-          return;
-        }
-        currentClicked = true;
-        settingsNav.style.backgroundColor="#485460";
-        if(currentElement.id=="settings-container"){
-          console.log("settings already on screen")
-          currentClicked = false;
-          return
-        }
-        else{
-          console.log("settings now showing")
-          resetElement(currentElement, currentNav);
-          setTimeout(()=> {
-            showElement(settingsContainer, settingsNav)
-          }, 300)
-        }
-
-      }
-
-    })
   }
-}
 </script>
 
 <style>
+  /* CSS to style the APP component*/
   html{
     height: 100%;
     margin:0;

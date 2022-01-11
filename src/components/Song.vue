@@ -1,7 +1,7 @@
 <template>
+  <!-- vue on click used to iterate through each song data and create div elements -->
   <div v-on:click="playSong" class="song">
     <div class="song-img">
-<!--      <img :src="image">-->
       <img v-bind:src="song.imgdata">
     </div>
 
@@ -10,20 +10,19 @@
         <p>{{ song.title }}</p>
       </div>
     </div>
-    <!--<h3>{{ song.text }}</h3>-->
+
   </div>
 
 </template>
 
 <script>
-/*import image from "./public/images/placeholder-song.png"*/
-
 export default {
   name: "Song",
   props: {
     song: Object
   },
   methods: {
+    // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
       console.log("DOING")
       //console.log(this.song.artist)
@@ -34,60 +33,56 @@ export default {
       window.changeSong('play')
     }
   },
-  /*data: function (){
-    return {
-      image: image
-    }
-  }*/
 }
 </script>
 
 <style scoped>
-.song {
-  position: relative;
-  display: block;
-  flex-flow: column;
-  width: 100%;
-  height: 100%;
-  background: #1E272E;
-  cursor: pointer;
-}
-.song-img{
-  position: relative;
-  width: 100%;
-  height: 75%;
-}
-.song-img img{
-  height: 100%;
-  width: 100%;
-}
+  /* Styles for SONG component */
+  .song {
+    position: relative;
+    display: block;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    background: #1E272E;
+    cursor: pointer;
+  }
+  .song-img{
+    position: relative;
+    width: 100%;
+    height: 75%;
+  }
+  .song-img img{
+    height: 100%;
+    width: 100%;
+  }
 
-.song-name {
-  position: relative;
-  height: 25%;
-  width: 100%;
-  margin: 0 auto;
-}
+  .song-name {
+    position: relative;
+    height: 25%;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-#song-text-parent{
-  height: auto;
-  width: 100%;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-#song-text-parent p{
-  margin: 0;
-  font-size: 13px;
-  font-weight: bold;
-  height: 100%;
-  width: 100%;
-  color: white;
-  text-align: center;
-}
+  #song-text-parent{
+    height: auto;
+    width: 100%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  #song-text-parent p{
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
 
 
 </style>

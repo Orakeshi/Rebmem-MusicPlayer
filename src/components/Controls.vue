@@ -1,18 +1,21 @@
 <template>
+  <!-- Audio Player container -->
   <div id="audio-player-container">
     <audio id="audio-player-test" src="" preload="metadata" loop>
       <source id="audioSource" src="">
     </audio>
+    <!-- Current image of the song that is being played -->
     <div id="img-container">
       <img id="song-img" src="../../public/images/Orakeshi.png">
     </div>
+    <!-- Name of the song that is being played -->
     <div id="song-name-container">
       <p id="song-name">Persona 4 song</p>
     </div>
     <div id="play-icon-container">
       <button id="play-icon"></button>
     </div>
-
+    <!-- Container for the volume of the application -->
     <div id="volume-container">
       <button id="mute-icon"></button>
       <div id="volume-controls-container">
@@ -21,7 +24,7 @@
       </div>
     </div>
 
-
+    <!-- Controls parent which controls the seek slider -->
     <div id="controls-parent">
       <div id="song-progress-container">
         <span id="current-time" class="time">0:00</span>
@@ -34,10 +37,12 @@
 </template>
 
 <script>
+  // NPM packages needed for the application
   const path = window.require("path")
   const lottieWeb = window.require("lottie-web")
-
+  // Wait until window is loaded
   window.addEventListener('load', function () {
+    // Store all HTML elements in varaibles for access at later date
     const playIconContainer = document.getElementById('play-icon');
     const audioPlayerContainer = document.getElementById('audio-player-container');
     const seekSlider = document.getElementById('seek-slider');
@@ -46,6 +51,7 @@
     let playState = 'play';
     let muteState = 'unmute';
 
+    // Animations for both the play and pause button + the mute button
     const playAnimation = lottieWeb.loadAnimation({
       container: playIconContainer,
       path: path.join('../','public/pause.json'),
@@ -66,6 +72,11 @@
 
     playAnimation.goToAndStop(14, true);
 
+    /***
+     * changeSong is responsbile for bypassing the animation
+     * bypass play state of the application
+     * @param bypassPlayState
+     */
     window.changeSong = function (bypassPlayState){
       if(bypassPlayState!=null){
         playState=bypassPlayState;
@@ -193,6 +204,7 @@
 </script>
 
 <style scoped>
+  /* Styles for the controls */
   #song-name-container{
     position: relative;
     float: left;
