@@ -40,8 +40,6 @@
 
 <script>
   // NPM packages needed for the application
-  // const path = window.require("path")
-  // import lottieWeb from 'lottie-web';
 
   // Wait until window is loaded
   window.addEventListener('load', function () {
@@ -53,27 +51,6 @@
     const muteIconContainer = document.getElementById('mute-icon');
     let playState = 'play';
     let muteState = 'unmute';
-
-    // Animations for both the play and pause button + the mute button
-    // const playAnimation = lottieWeb.loadAnimation({
-    //   container: playIconContainer,
-    //   path: path.join('../','public/pause.json'),
-    //   renderer: 'svg',
-    //   loop: false,
-    //   autoplay: false,
-    //   name: "Play Animation",
-    // });
-
-    // const muteAnimation = lottieWeb.loadAnimation({
-    //   container: muteIconContainer,
-    //   path: path.join('../','public/mute.json'),
-    //   renderer: 'svg',
-    //   loop: false,
-    //   autoplay: false,
-    //   name: "Mute Animation",
-    // });
-
-    //playAnimation.goToAndStop(14, true);
 
     /***
      * changeSong is responsbile for bypassing the animation
@@ -151,23 +128,15 @@
       seekSlider.max = Math.floor(audio.duration);
     }
 
-    // const displayBufferedAmount = () => {
-    //   audio.onprogress = function (){
-    //     if(audio.buffered.length>0){
-    //       var w = 100*(audio.buffered.end(0))/audio.duration;
-    //       //const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
-    //       audioPlayerContainer.style.setProperty('--buffered-width',w+"%");
-    //     }
-    //     else{
-    //       audio.buffered.start(0)
-    //     }
-    //
-    //   }
-    //
-    // }
     const displayBufferedAmount = () => {
       audio.onprogress = function (){
-        const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
+        let bufferedAmount;
+        if(audio.buffered.length>0){
+          bufferedAmount = audio.buffered.end(0)
+        }
+        else{
+          bufferedAmount = audio.buffered.start(0)
+        }
         audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
       }
     }

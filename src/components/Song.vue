@@ -2,12 +2,12 @@
   <!-- vue on click used to iterate through each song data and create div elements -->
   <div v-on:click="playSong" class="song">
     <div class="song-img">
-      <img v-bind:src="song.imgdata">
+      <img id="set-src" src="">
     </div>
 
     <div class="song-name" id="song-name-container">
       <div id="song-text-parent">
-        <p>{{ song.title }}</p>
+        <p v-bind:class="dataFieldClass" id="new-title"></p>
       </div>
     </div>
 
@@ -24,6 +24,17 @@ export default {
   props: {
     song: Object
   },
+  dataFieldClass: function (e) {
+    if (this.song.title === ""){
+      console.log("sad man")
+      setTimeout(this.dataFieldClass, 50);//wait 50 millisecnds then recheck
+    }
+    else{
+      let div = document.createElement('div')
+      div.innerHTML = this.song.title
+      e.appendChild(div)
+    }
+  },
   methods: {
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
@@ -33,6 +44,7 @@ export default {
       //document.getElementById("audio-player-test").crossOrigin = 'anonymous'
       document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
+      console.log(this.song.imgdata);
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
     }

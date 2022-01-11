@@ -37,7 +37,7 @@ export default {
         songs: []
       }
     },
-    created()
+    beforeMount()
     {
       let songId = 1;
       // Read all files in the given song directory
