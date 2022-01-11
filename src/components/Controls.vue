@@ -10,7 +10,7 @@
     </div>
     <!-- Name of the song that is being played -->
     <div id="song-name-container">
-      <p id="song-name">Persona 4 song</p>
+      <p id="song-name"></p>
     </div>
     <div id="play-icon-container">
       <button id="play-icon"></button>
