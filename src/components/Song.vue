@@ -2,12 +2,12 @@
   <!-- vue on click used to iterate through each song data and create div elements -->
   <div v-on:click="playSong" class="song">
     <div class="song-img">
-      <img id="set-src" src="">
+      <img id="set-src" v-bind:src="song.imgdata">
     </div>
 
     <div class="song-name" id="song-name-container">
       <div id="song-text-parent">
-        <p v-bind:class="dataFieldClass" id="new-title"></p>
+        <p>{{song.title}}</p>
       </div>
     </div>
 
@@ -19,22 +19,13 @@
 const path = window.require("path")
 const os = window.require("os").homedir()
 const songFolder = path.join(os, 'Music')
+
 export default {
   name: "Song",
   props: {
     song: Object
   },
-  dataFieldClass: function (e) {
-    if (this.song.title === ""){
-      console.log("sad man")
-      setTimeout(this.dataFieldClass, 50);//wait 50 millisecnds then recheck
-    }
-    else{
-      let div = document.createElement('div')
-      div.innerHTML = this.song.title
-      e.appendChild(div)
-    }
-  },
+
   methods: {
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){

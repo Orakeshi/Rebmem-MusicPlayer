@@ -1,6 +1,6 @@
 <template>
   <!-- Containers for all the components that need to show to make up the application -->
-  <div className="container">
+  <div id="app-container" className="container">
     <div className="nav-parent-container">
       <Navigation></Navigation>
     </div>
@@ -211,7 +211,10 @@ body {
   display: block;
   width: 100%;
   position: absolute;
-  height: 100%;
+  height: 85%;
+}
+#app-container{
+
 }
 
 .nav-parent-container {
@@ -233,7 +236,7 @@ body {
 
 .library-parent-container {
   position: relative;
-  height: 75%;
+  height: 100%;
   overflow: auto;
 
 }

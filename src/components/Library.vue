@@ -60,7 +60,7 @@ export default {
               // create a new parser from a node ReadStream
               mm(fs.createReadStream(songFolder+"/"+file), function (err, metadata) {
                 if (err) throw err;
-                console.log(metadata);
+                //console.log(metadata);
                 try {
                   if (metadata.picture.length > 0) {
                     var picture = metadata.picture[0];
@@ -69,20 +69,31 @@ export default {
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
 
-                } catch (err) {
-                  console.log(err);
-                  newSong.imgdata = "https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png"
-                  newSong.title = file.substring(0, file.length - 4);
-                  newSong.artist = "N/A";
-                }
-              });
+                  // Set images
+                  let cont = document.getElementById(newSong.id);
+                  let allImg = cont.getElementsByTagName('img');
+                  allImg[0].setAttribute("src", newSong.imgdata)
 
-              this.songs.push(newSong);
-              songId +=1
-              console.log(file);
-            }
-            else{
-              console.log("Not audio")
+                  //Set Song names
+                  let contNew = document.getElementById(newSong.id);
+                  let allP = contNew.getElementsByTagName('p');
+                  allP[0].innerHTML = newSong.title;
+                  } catch (err) {
+                    console.log(err);
+                    let cont = document.getElementById(newSong.id);
+                    let allImg = cont.getElementsByTagName('img');
+                    allImg[0].setAttribute("src", "\"https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png\"")
+
+                    let contNew = document.getElementById(newSong.id);
+                    let allP = contNew.getElementsByTagName('p');
+                    allP[0].innerHTML = file.substring(0, file.length - 4);
+                    newSong.artist = "N/A";
+                  }
+                });
+
+                this.songs.push(newSong);
+                songId +=1
+                console.log(file);
             }
           });
         }
