@@ -12,17 +12,18 @@
 <script>
   // Import VUE component and packages needed
   import Songs from './Songs';
+  import mm from 'musicmetadata'
 
   const fs = window.require("fs")
   const path = window.require("path")
+  const os = window.require("os").homedir()
 
-  const songFolder = './src/assets/songs';
+  //const songFolder = './src/assets/songs';
+  const songFolder = path.join(os, 'Music')
+  //const songFolder = app.getPath('music')
   console.log(songFolder);
-  // Simple API - will fetch all tags
-  //const jsmediatags = require("jsmediatags");
-  import mm from 'musicmetadata'
 
-  export default {
+export default {
     name: 'Library',
     props:  {
       title: String,
@@ -52,10 +53,10 @@
                 id: songId,
                 title: "",
                 artist: "",
-                audiosrc: path.join(songFolder, '../../../..', 'src/assets/songs/', file),
+                audiosrc: file,
                 imgdata: ""
               }
-              console.log(path.join(songFolder, '../../../..', 'src/assets/songs/', file))
+              console.log(path.join(songFolder,'/',file))
               // create a new parser from a node ReadStream
               mm(fs.createReadStream(songFolder+"/"+file), function (err, metadata) {
                 if (err) throw err;
@@ -63,8 +64,7 @@
                 try {
                   if (metadata.picture.length > 0) {
                     var picture = metadata.picture[0];
-                    var url = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
-                    newSong.imgdata = url;
+                    newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
                   }
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
@@ -76,41 +76,6 @@
                   newSong.artist = "N/A";
                 }
               });
-
-              //listen for the metadata event
-              // let base64String = "";
-              //
-              // try {
-              //   for (let i = 0; i < result.picture.data.length; i++) {
-              //     base64String += String.fromCharCode(result.picture.data[i]);
-              //   }
-              //   newSong.imgdata = "data:" + result.picture.format + ";base64," + window.btoa(base64String)
-
-
-              // jsmediatags.read("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", {
-              // //new jsmediatags.Reader(songFolder+"/"+file).setTagsToRead(["title", "artist", "picture"]).read({
-              //   onSuccess: function(tag) {
-              //
-              //     let tags = tag.tags;
-              //
-              //     let base64String = "";
-              //
-              //     try {
-              //       for (let i = 0; i < tags.picture.data.length; i++) {
-              //         base64String += String.fromCharCode(tags.picture.data[i]);
-              //       }
-              //       newSong.imgdata = "data:" + tags.picture.format + ";base64," + window.btoa(base64String)
-              //       newSong.title = tags.title;
-              //       newSong.artist = tags.artist;
-              //     }
-              //     catch (err){
-              //       console.log(err);
-              //       newSong.imgdata = "https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png"
-              //       newSong.title = file.substring(0, file.length - 4);
-              //       newSong.artist = "N/A";
-              //     }
-              //   },
-              // });
 
               this.songs.push(newSong);
               songId +=1

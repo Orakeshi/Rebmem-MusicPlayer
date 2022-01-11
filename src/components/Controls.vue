@@ -1,8 +1,8 @@
 <template>
   <!-- Audio Player container -->
   <div id="audio-player-container">
-    <audio id="audio-player-test" src="" preload="metadata" loop>
-      <source id="audioSource" src="">
+    <audio id="audio-player-test" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata" loop>
+      <source id="audioSource" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
     </audio>
     <!-- Current image of the song that is being played -->
     <div id="img-container">
@@ -151,12 +151,25 @@
       seekSlider.max = Math.floor(audio.duration);
     }
 
+    // const displayBufferedAmount = () => {
+    //   audio.onprogress = function (){
+    //     if(audio.buffered.length>0){
+    //       var w = 100*(audio.buffered.end(0))/audio.duration;
+    //       //const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
+    //       audioPlayerContainer.style.setProperty('--buffered-width',w+"%");
+    //     }
+    //     else{
+    //       audio.buffered.start(0)
+    //     }
+    //
+    //   }
+    //
+    // }
     const displayBufferedAmount = () => {
       audio.onprogress = function (){
         const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1));
         audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
       }
-
     }
 
     const whilePlaying = () => {

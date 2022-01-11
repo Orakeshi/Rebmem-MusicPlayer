@@ -16,6 +16,9 @@
 </template>
 
 <script>
+const path = window.require("path")
+const os = window.require("os").homedir()
+const songFolder = path.join(os, 'Music')
 export default {
   name: "Song",
   props: {
@@ -26,9 +29,9 @@ export default {
     playSong: function(){
       console.log("DOING")
       //console.log(this.song.artist)
-      console.log("HOWDY: "+this.song.audiosrc);
+      console.log("HOWDY: "+songFolder+"/"+this.song.audiosrc);
       //document.getElementById("audio-player-test").crossOrigin = 'anonymous'
-      document.getElementById("audio-player-test").setAttribute("src", this.song.audiosrc)
+      document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
