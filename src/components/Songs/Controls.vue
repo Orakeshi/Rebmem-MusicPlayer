@@ -6,7 +6,7 @@
     </audio>
     <!-- Current image of the song that is being played -->
     <div id="img-container">
-      <img id="song-img" src="../../public/images/Orakeshi.png">
+      <img id="song-img" src="../../../public/images/Orakeshi.png">
     </div>
     <!-- Name of the song that is being played -->
     <div id="song-name-container">
@@ -14,12 +14,12 @@
     </div>
     <div id="play-icon-container">
 <!--      <button id="play-icon"></button>-->
-      <img id="play-icon" src="../../public/images/play-icon.png">
+      <img id="play-icon" src="../../../public/images/play-icon.png">
     </div>
     <!-- Container for the volume of the application -->
     <div id="volume-container">
 <!--      <button id="mute-icon"></button>-->
-      <img id="mute-icon" src="../../public/images/speaker-icon.png">
+      <img id="mute-icon" src="../../../public/images/speaker-icon.png">
       <div id="volume-controls-container">
         <output id="volume-output">100</output>
         <input class="slider-input" type="range" id="volume-slider" max="100" value="100">

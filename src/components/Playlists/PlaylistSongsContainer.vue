@@ -10,7 +10,7 @@
 
 <script>
 // Imports for component
-import Songs from './Songs';
+import Songs from '../Songs/Songs';
 
 export default {
   name: "PlaylistSongsContainer",
@@ -141,12 +141,6 @@ export default {
         this.updateCards()
       })
     }
-    // window.addEventListener("load", ()=>{
-    //
-    // })
-    // this.refreshContainer()
-    // this.updateCards()
-
 
   }
 }

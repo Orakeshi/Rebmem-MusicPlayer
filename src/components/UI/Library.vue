@@ -10,7 +10,7 @@
 
 <script>
   // Import VUE component and packages needed
-  import Songs from './Songs';
+  import Songs from '../Songs/Songs';
   import mm from 'musicmetadata'
 
   const fs = window.require("fs")
