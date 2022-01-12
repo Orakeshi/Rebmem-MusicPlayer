@@ -26,8 +26,8 @@
 </template>
 
 <script>
+// All imports and requires for component
 import Library from "./Library";
-
 const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()
@@ -37,11 +37,21 @@ const songFolder = path.join(os, 'Music')
 export default {
   name: "PlaylistPopup",
   methods: {
+    /***
+     * handles getting all the songs from the library container
+     * @param e
+     */
     getSongs: function (e){
       this.songs = e
 
       console.log(this.songs)
     },
+    /***
+     * Method handles highlighting song
+     * Also handles pushing selected song to array ready to write to file
+     * @param songId
+     * @param song
+     */
     selectSong: function (songId, song){
       let temp = document.getElementById(songId);
       if (this.selectedSongs.includes(song)){
@@ -66,7 +76,9 @@ export default {
       console.log(songId)
       console.log(this.selectedSongs)
     },
-
+    /***
+     * Responsible for writing playlist data to JSON file
+     */
     submitPlaylist: function (){
       let playlistName = document.getElementById("playlist-name").value;
 
@@ -110,35 +122,33 @@ export default {
       console.log(this.songs)
     },
 
+    /***
+     * Method is responsible for populating song images and names for selectable songs on popup
+     */
     updateOptions(){
-      console.log("in")
-      console.log(this.songs)
       this.$nextTick(function(){
         for (let i in this.songs){
           let currentSong = this.songs[i]
-          console.log(currentSong)
           let currentElement = document.getElementById("popup"+currentSong.id)
 
-
           this.$nextTick(function(){
-            console.log(currentElement.getElementsByTagName('p')[0])
             currentElement.getElementsByTagName('p')[0].innerHTML = currentSong.title
-            console.log(currentElement.getElementsByTagName('p')[0])
             currentElement.getElementsByTagName('img')[0].setAttribute("src", currentSong.imgdata)
-            console.log(currentSong)
           })
         }
       })
     }
   },
+  /***
+   * Handles loading song cards when create button is pressed
+   */
   mounted() {
     window.addEventListener("load", ()=>{
       this.updateOptions()
 
     })
-    let test = document.getElementById("playlist-create-button")
     let clicked = false
-    test.addEventListener("click", ()=>{
+    document.getElementById("playlist-create-button").addEventListener("click", ()=>{
       if (clicked){
         return
       }
@@ -151,7 +161,10 @@ export default {
 
 
   },
-
+  /***
+   * Stores all array data needed for component
+   * @returns {{highlightedSongs: *[], selectedSongs: *[], songs: *[]}}
+   */
   data(){
     // Store array of song data
     return {

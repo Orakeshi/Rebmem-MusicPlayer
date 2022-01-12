@@ -9,11 +9,14 @@
 </template>
 
 <script>
-// Import VUE component and packages needed
+// Imports for component
 import Songs from './Songs';
 
 export default {
   name: "PlaylistSongsContainer",
+  /***
+   * Props needed for data to be passed from parent
+   */
   props:  {
     title: String,
     playlist: Object
@@ -21,8 +24,11 @@ export default {
   components: {
     Songs,
   },
+  /***
+   * Data needed for component
+   * @returns {{songs: *[], allsongs: *[], componentKey: number}}
+   */
   data(){
-    // Store array of song data
     return {
       songs: [],
       allsongs: [],
@@ -30,75 +36,47 @@ export default {
     }
   },
   methods:{
+    /***
+     * Method handles reading library data
+     * @param e
+     */
     getSongs: function (e){
       this.allsongs = e
     },
+    /***
+     * Method updates song images and names on DOM load
+     */
     updateCards(){
-      window.addEventListener("load", ()=>{
-        for (let i in this.songs){
-          let currentSong = this.songs[i]
-          let songCard = document.getElementById(currentSong.id)
-          //console.log(songCard)
-          let allImg = songCard.getElementsByTagName('img');
-          let allP = songCard.getElementsByTagName('p');
+        console.log("here")
+        this.$nextTick(function(){
+          for (let i in this.songs){
+            let currentSong = this.songs[i]
+            console.log(currentSong)
+            let songCard = document.getElementById(currentSong.id)
+            //console.log(songCard)
+            let allImg = songCard.getElementsByTagName('img');
+            let allP = songCard.getElementsByTagName('p');
 
-
-          allImg[0].setAttribute("src", currentSong.imgdata)
-          // Set Names
-          allP[0].innerHTML = currentSong.title;
-        }
+            allImg[0].setAttribute("src", currentSong.imgdata)
+            // Set Names
+            allP[0].innerHTML = currentSong.title;
+          }
       })
     },
-    updateNewCards(){
-      this.$nextTick(function(){
-        for (let i in this.songs){
-          let currentSong = this.songs[i]
-          console.log(currentSong)
-          let songCard = document.getElementById(currentSong.id)
-          //console.log(songCard)
-          let allImg = songCard.getElementsByTagName('img');
-          let allP = songCard.getElementsByTagName('p');
-
-          allImg[0].setAttribute("src", currentSong.imgdata)
-          // Set Names
-          allP[0].innerHTML = currentSong.title;
-        }
-      })
-  },
 
     forceRefresh(){
       this.componentKey +=1;
     },
+    /***
+     * Handles refreshing song container data when new playlist created
+     */
     refreshContainer(){
-      this.forceRefresh();
-      let songId = 1;
-
-      let playlist = this.playlist
-      for (let i in playlist.song) {
-        let newSong = {
-          id: "",
-          title: "",
-          imgdata: "",
-          audiosrc: "",
-        }
-
-        newSong.id = "playlist-test"+this.playlist.id+songId;
-        newSong.title = playlist.song[i].title;
-        newSong.imgdata = "../images/Large-Logo.png"
-        newSong.audiosrc = playlist.song[i].audiosrc;
-
-        this.songs.push(newSong);
-        songId += 1
-      }
-      this.updateNewCards()
-    },
-
-      createPlaylists(){
+      this.$nextTick(function(){
         this.forceRefresh();
         let songId = 1;
-        let playlist = this.playlist
 
-        for (let i in playlist.songs) {
+        let playlist = this.playlist
+        for (let i in playlist.song) {
           let newSong = {
             id: "",
             title: "",
@@ -107,22 +85,67 @@ export default {
           }
 
           newSong.id = "playlist-test"+this.playlist.id+songId;
-          newSong.title = playlist.songs[i].title;
+          newSong.title = playlist.song[i].title;
           newSong.imgdata = "../images/Large-Logo.png"
-          newSong.audiosrc = playlist.songs[i].audiosrc;
+          newSong.audiosrc = playlist.song[i].audiosrc;
 
           this.songs.push(newSong);
           songId += 1
         }
+      })
+
+    },
+
+    /***
+     * Handles refreshing song container data on existing playlists
+     */
+    createPlaylists(){
+      this.forceRefresh();
+      let songId = 1;
+      let playlist = this.playlist
+
+      for (let i in playlist.songs) {
+        let newSong = {
+          id: "",
+          title: "",
+          imgdata: "",
+          audiosrc: "",
+        }
+
+        newSong.id = "playlist-test"+this.playlist.id+songId;
+        newSong.title = playlist.songs[i].title;
+        newSong.imgdata = "../images/Large-Logo.png"
+        newSong.audiosrc = playlist.songs[i].audiosrc;
+
+        this.songs.push(newSong);
+        songId += 1
       }
+    }
   },
 
+  /***
+   * Handles checking what methods to run dependent on DOM status
+   * If DOM complete -> It means new playlist
+   * else it means existing playlist
+   */
   mounted() {
-    window.addEventListener("load", ()=>{
-      this.createPlaylists()
-    })
-    this.refreshContainer()
-    this.updateCards()
+    if(document.readyState === "complete") {
+      this.refreshContainer()
+      this.$nextTick(function (){
+        this.updateCards()
+      })
+    }
+    else{
+      window.addEventListener("load", ()=>{
+        this.createPlaylists()
+        this.updateCards()
+      })
+    }
+    // window.addEventListener("load", ()=>{
+    //
+    // })
+    // this.refreshContainer()
+    // this.updateCards()
 
 
   }

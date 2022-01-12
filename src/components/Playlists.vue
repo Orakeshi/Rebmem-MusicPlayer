@@ -22,6 +22,7 @@
 </template>
 
 <script>
+// All imports and requires
 import CreatePlaylists from "./CreatePlaylists";
 import PlaylistSongsContainer from "./PlaylistSongsContainer";
 import PlaylistPopup from "./PlaylistPopup";
@@ -29,12 +30,11 @@ import PlaylistPopup from "./PlaylistPopup";
 const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()
-//
 const songFolder = path.join(os, 'Music')
 
+// Variables need for component
 let showPlaylist = true
 let playlistData="";
-//let createButton = document.getElementById("playlist-create-button")
 
 export default {
   name: "Playlists",
@@ -43,6 +43,10 @@ export default {
     PlaylistSongsContainer,
     CreatePlaylists,
   },
+  /***
+   * data needed for playlists
+   * @returns {{playlists: *[]}}
+   */
   data(){
     // Store array of song data
     return {
@@ -55,13 +59,15 @@ export default {
     }
   },
   methods: {
+    /***
+     * Method handles refreshing the song container for a new playlist
+     */
     addPlaylistData(){
       if (playlistData !=""){
-        console.log(playlistData)
-        console.log(playlistData.id)
         window.emitter.emit("refreshLibrary")
+
         this.playlists.push(playlistData)
-        console.log("waitin in here")
+        // Reset playlist data and wait for new component
         playlistData = ""
         this.addPlaylistData()
         return
@@ -72,6 +78,9 @@ export default {
 
     },
 
+    /***
+     * Method responsible for reading all playlist json file and storing in playlists array
+     */
     loadPlaylistData(){
       this.addPlaylistData()
       window.playlistId = 1;
@@ -110,9 +119,6 @@ export default {
               this.playlists.push(newPlaylist);
               window.playlistId += 1
             }
-            else{
-              //console.log("not audio")
-            }
           });
         }
 
@@ -121,10 +127,10 @@ export default {
     forcedUpdate() {
       this.componentKey += 1;
     },
-    // Function used to adjust the controls picture and name when song clicked ff
+    /***
+     * Handles showing popup container on button press
+     */
     showPlaylist: function(){
-      //this.addDiv()
-      //this.loadPlaylistData()
       if (showPlaylist){
         document.getElementById("playlist-popup").style.display="block";
       }
@@ -135,17 +141,19 @@ export default {
 
     }
   },
-  beforeMount() {
-    window.addEventListener("load", ()=> {
-      console.log(this.songs)
-    })
-  },
+  /***
+   * Loads playlist data when component created
+   */
   created()
   {
     this.loadPlaylistData()
   },
+  /***
+   * When component and DOM loads -
+   * Listen for new playlist - Send data if created
+   * Listen for playlist click - Open clicked playlist
+   */
   mounted: function mounted() {
-
     let currentPlaylist ="";
       window.emitter.on('newplaylist', function (data){
         console.log(data)
@@ -160,7 +168,6 @@ export default {
         currentPlaylist.style.display="block"
       })
     }
-  // components: {Songs}
 }
 </script>
 

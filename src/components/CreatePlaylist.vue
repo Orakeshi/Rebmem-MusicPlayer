@@ -25,7 +25,9 @@ export default {
     }
   },
   methods: {
-    // Function used to adjust the controls picture and name when song clicked
+    /***
+     * method handles emitting event to inform playlist component that the playlist has been clicked
+     */
     openPlaylist: function(){
       let playlist = document.getElementById("playlistmain"+this.playlist.id)
       window.emitter.emit('openplaylist', playlist)
@@ -34,6 +36,9 @@ export default {
       this.componentKey +=1;
     }
   },
+  /***
+   * Method is responsible for updating the playlist image and name in the container
+   */
   mounted() {
     window.addEventListener("load", ()=>{
       this.forceRerender()
