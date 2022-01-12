@@ -37,7 +37,6 @@ export default {
      */
     showContainer: function(containerName){
       window.emitter.emit('showContent', containerName)
-      // this.$root.$emit('showContent', containerName) //like this
     },
   }
 

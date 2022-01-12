@@ -29,13 +29,8 @@ export default {
   methods: {
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
-      console.log("DOING")
-      //console.log(this.song.artist)
-      console.log("HOWDY: "+songFolder+"/"+this.song.audiosrc);
-      //document.getElementById("audio-player-test").crossOrigin = 'anonymous'
       document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
-      console.log(this.song.imgdata);
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
     }

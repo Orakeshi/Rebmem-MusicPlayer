@@ -127,13 +127,10 @@ export default {
         }
         currentClicked = true
         libraryNav.style.backgroundColor = "#485460";
-        console.log(currentElement.id)
         if (currentElement.id == "library-container") {
-          console.log("library already on screen")
           currentClicked = false;
           return
         } else {
-          console.log("library now showing")
           resetElement(currentElement, currentNav);
           setTimeout(() => {
             showElement(libraryContainer, libraryNav)
@@ -149,11 +146,9 @@ export default {
         currentClicked = true;
         playlistsNav.style.backgroundColor = "#485460";
         if (currentElement.id == "playlists-container") {
-          console.log("playlist already on screen")
           currentClicked = false;
           return
         } else {
-          console.log("playlist now showing")
           resetElement(currentElement, currentNav);
           setTimeout(() => {
             showElement(playlistsContainer, playlistsNav)
@@ -170,11 +165,9 @@ export default {
         currentClicked = true;
         settingsNav.style.backgroundColor = "#485460";
         if (currentElement.id == "settings-container") {
-          console.log("settings already on screen")
           currentClicked = false;
           return
         } else {
-          console.log("settings now showing")
           resetElement(currentElement, currentNav);
           setTimeout(() => {
             showElement(settingsContainer, settingsNav)
@@ -183,11 +176,6 @@ export default {
 
       }
     });
-    // this.$root.$on('showContent', (itemToShow) => {
-    //
-    //
-    //
-    // })
   }
 }
 </script>
