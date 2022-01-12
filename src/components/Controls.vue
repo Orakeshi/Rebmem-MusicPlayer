@@ -51,7 +51,7 @@
     let muteState = 'unmute';
 
     /***
-     * changeSong is responsbile for bypassing the animation
+     * changeSong is responsible for bypassing the animation
      * bypass play state of the application
      * @param bypassPlayState
      */

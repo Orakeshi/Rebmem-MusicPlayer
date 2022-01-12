@@ -56,37 +56,27 @@ export default {
               // create a new parser from a node ReadStream
               mm(fs.createReadStream(songFolder + "/" + file), function (err, metadata) {
                 if (err) throw err;
+
+                let cont = document.getElementById(newSong.id);
+                let allImg = cont.getElementsByTagName('img');
+                let allP = cont.getElementsByTagName('p');
+
                 if (metadata.picture.length > 0) {
                   var picture = metadata.picture[0];
                   newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
-
-                  // Set images
-                  let cont = document.getElementById(newSong.id);
-                  let allImg = cont.getElementsByTagName('img');
-                  allImg[0].setAttribute("src", newSong.imgdata)
-
-                  //Set Song names
-                  let contNew = document.getElementById(newSong.id);
-                  let allP = contNew.getElementsByTagName('p');
-                  allP[0].innerHTML = newSong.title;
-
                 } else {
                   // Set images
                   console.log(err);
-                  let cont = document.getElementById(newSong.id);
-                  let allImg = cont.getElementsByTagName('img');
-                  allImg[0].setAttribute("src", "../images/Large-Logo.png")
-
-                  //Set Song names
-                  let contNew = document.getElementById(newSong.id);
-                  let allP = contNew.getElementsByTagName('p');
-                  allP[0].innerHTML = file.substring(0, file.length - 4);
                   newSong.imgdata = "../images/Large-Logo.png";
                   newSong.title = file.substring(0, file.length - 4);
                   newSong.artist = "N/A";
                 }
+                // Set Images
+                allImg[0].setAttribute("src", newSong.imgdata)
+                // Set Names
+                allP[0].innerHTML = newSong.title;
               });
               this.songs.push(newSong);
               songId += 1
