@@ -96,7 +96,6 @@ export default {
                   try {
                     let playlist = JSON.parse(jsonString);
                     newPlaylist.songs = playlist.song
-                    console.log(playlist.song)
                     newPlaylist.title = playlist.title
                   }
                   catch (err) {

@@ -40,6 +40,8 @@ export default {
   methods: {
     getSongs: function (e){
       this.songs = e
+
+      console.log(this.songs)
     },
     selectSong: function (songId, song){
       let temp = document.getElementById(songId);
@@ -108,18 +110,46 @@ export default {
       window.emitter.emit("newplaylist", playlistData)
       console.log(this.songs)
     },
+    updateOptions(){
+      console.log("in")
+      console.log(this.songs)
+      this.$nextTick(function(){
+        for (let i in this.songs){
+          let currentSong = this.songs[i]
+          console.log(currentSong)
+          let currentElement = document.getElementById("popup"+currentSong.id)
+
+
+          this.$nextTick(function(){
+            console.log(currentElement.getElementsByTagName('p')[0])
+            currentElement.getElementsByTagName('p')[0].innerHTML = currentSong.title
+            console.log(currentElement.getElementsByTagName('p')[0])
+            currentElement.getElementsByTagName('img')[0].setAttribute("src", currentSong.imgdata)
+            console.log(currentSong)
+          })
+        }
+      })
+    }
   },
   mounted() {
     window.addEventListener("load", ()=>{
-      for (let i in this.songs){
-        let currentSong = this.songs[i]
-        let currentElement = document.getElementById("popup"+currentSong.id)
+      this.updateOptions()
 
-        currentElement.getElementsByTagName('p')[0].innerHTML = currentSong.title
-        currentElement.getElementsByTagName('img')[0].setAttribute("src", currentSong.imgdata)
-        console.log(currentSong)
-      }
     })
+    let test = document.getElementById("playlist-create-button")
+    let clicked = false
+    test.addEventListener("click", ()=>{
+      if (clicked){
+        return
+      }
+      else{
+        clicked = true
+        this.updateOptions()
+      }
+
+    })
+
+
   },
 
   data(){

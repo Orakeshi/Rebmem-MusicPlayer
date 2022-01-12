@@ -35,10 +35,8 @@ export default {
     },
     updateCards(){
       window.addEventListener("load", ()=>{
-        console.log("Pass Card #1")
         for (let i in this.songs){
           let currentSong = this.songs[i]
-          console.log(currentSong)
           let songCard = document.getElementById(currentSong.id)
           //console.log(songCard)
           let allImg = songCard.getElementsByTagName('img');
@@ -53,7 +51,6 @@ export default {
     },
     updateNewCards(){
       this.$nextTick(function(){
-        console.log("Pass Card #2")
         for (let i in this.songs){
           let currentSong = this.songs[i]
           console.log(currentSong)
@@ -75,10 +72,8 @@ export default {
     refreshContainer(){
       this.forceRefresh();
       let songId = 1;
-      console.log(songId)
 
       let playlist = this.playlist
-      console.log(playlist)
       for (let i in playlist.song) {
         let newSong = {
           id: "",
@@ -93,18 +88,14 @@ export default {
         newSong.audiosrc = playlist.song[i].audiosrc;
 
         this.songs.push(newSong);
-        console.log(newSong)
         songId += 1
       }
-      console.log(this.songs)
       this.updateNewCards()
     },
 
       createPlaylists(){
         this.forceRefresh();
         let songId = 1;
-        console.log(songId)
-
         let playlist = this.playlist
 
         for (let i in playlist.songs) {
@@ -127,8 +118,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.playlist)
-
     window.addEventListener("load", ()=>{
       this.createPlaylists()
     })

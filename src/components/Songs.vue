@@ -18,9 +18,6 @@ export default {
   components: {
     Song,
   },
-  mounted() {
-    console.log(this.songs)
-  },
   computed: {
     componentKey: function() {
       return "yay"
