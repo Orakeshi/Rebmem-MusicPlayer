@@ -16,6 +16,7 @@
 </template>
 
 <script>
+const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()
 const songFolder = path.join(os, 'Music')
@@ -40,7 +41,15 @@ export default {
     },
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
-      document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
+      if (fs.existsSync(songFolder+"/"+this.song.audiosrc)){
+        document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
+      }
+      else {
+        document.getElementById("audio-player-test").setAttribute("src", "")
+        console.log("Song is no longer available")
+      }
+
+
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
