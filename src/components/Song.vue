@@ -1,8 +1,8 @@
 <template>
   <!-- vue on click used to iterate through each song data and create div elements -->
-  <div v-on:click="playSong" class="song">
+  <div v-on:click="playSong" :key="componentKey" class="song">
     <div class="song-img">
-      <img id="set-src" v-bind:src="song.imgdata">
+      <img id="set-src">
     </div>
 
     <div class="song-name" id="song-name-container">
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()
 const songFolder = path.join(os, 'Music')
@@ -25,11 +26,30 @@ export default {
   props: {
     song: Object
   },
+  data(){
+    return{
+      componentKey: 0
+    }
+  },
 
   methods: {
+    forceRerender(){
+      this.componentKey +=1;
+    },
+    mounted(){
+      this.forceRerender()
+    },
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
-      document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
+      if (fs.existsSync(songFolder+"/"+this.song.audiosrc)){
+        document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
+      }
+      else {
+        document.getElementById("audio-player-test").setAttribute("src", "")
+        console.log("Song is no longer available")
+      }
+
+
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')

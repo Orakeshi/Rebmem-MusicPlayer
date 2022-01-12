@@ -3,7 +3,6 @@
   <div class="library-songs-container">
     <Songs :songs="songs"></Songs>
     <div class="controls-blocker">
-
     </div>
   </div>
 
@@ -26,13 +25,16 @@ export default {
       title: String,
     },
     components: {
-      Songs
+      Songs,
     },
     data(){
       // Store array of song data
       return {
         songs: []
       }
+    },
+    mounted () {
+      this.$emit('songs', this.songs);
     },
     beforeMount()
     {
@@ -63,7 +65,9 @@ export default {
 
                 if (metadata.picture.length > 0) {
                   var picture = metadata.picture[0];
+
                   newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
+                  //console.log(newSong.imgdata)
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
                 } else {

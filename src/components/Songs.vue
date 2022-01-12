@@ -1,6 +1,6 @@
 <template>
   <!-- Iterate through songs and create a song component for each song-->
-  <div class="songs-container">
+  <div class="songs-container" :key="componentKey">
     <div class="song-item" v-for="song in songs" :id="song.id" :key="song.id">
       <Song :song="song"></Song>
     </div>
@@ -18,7 +18,11 @@ export default {
   components: {
     Song,
   },
-
+  computed: {
+    componentKey: function() {
+      return "yay"
+    }
+  },
 
 }
 </script>
@@ -26,8 +30,10 @@ export default {
 <style scoped>
   /* CSS styles for Songs component */
   .songs-container{
-    padding-bottom: 5%;
-    margin: 0 auto;
+    position: relative;
+    top: 0;
+    height: auto;
+
   }
   .song-item{
     height: 150px;

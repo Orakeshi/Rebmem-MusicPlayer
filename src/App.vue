@@ -1,22 +1,19 @@
 <template>
   <!-- Containers for all the components that need to show to make up the application -->
-  <div id="app-container" className="container">
-    <div className="nav-parent-container">
+  <div id="app-container" class="container">
+    <div class="nav-parent-container">
       <Navigation></Navigation>
     </div>
-    <div id="library-container" className="library-parent-container">
+    <div id="library-container" class="library-parent-container">
       <Library></Library>
     </div>
-    <div id="playlists-container" className="playlists-parent-container">
+    <div id="playlists-container" class="playlists-parent-container">
       <Playlists></Playlists>
     </div>
-    <div id="settings-container" className="settings-parent-container">
+    <div id="settings-container" class="settings-parent-container">
       <Settings></Settings>
     </div>
-    <div className="divider">
-
-    </div>
-    <div className="controls-parent-container">
+    <div class="controls-parent-container">
       <Controls></Controls>
     </div>
 
@@ -196,13 +193,14 @@ body {
 }
 
 .container {
+
+}
+#app-container{
   display: block;
   width: 100%;
   position: absolute;
-  height: 85%;
-}
-#app-container{
-
+  height: 100%;
+  overflow: hidden;
 }
 
 .nav-parent-container {
@@ -223,11 +221,13 @@ body {
 }
 
 .library-parent-container {
+
   position: relative;
-  height: 100%;
+  height: 80%;
   overflow: auto;
 
 }
+
 
 .library-parent-container::-webkit-scrollbar {
   width: 20px;

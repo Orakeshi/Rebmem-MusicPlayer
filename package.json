@@ -14,12 +14,14 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "electron-reload": "^2.0.0-alpha.1",
     "jsmediatags": "3.8.1",
     "lottie-web": "^5.8.1",
     "musicmetadata": "^2.0.5",
     "path": "^0.12.7",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.0.0",
+    "vuex": "^3.6.2",
     "walkdir": "^0.4.1"
   },
   "devDependencies": {

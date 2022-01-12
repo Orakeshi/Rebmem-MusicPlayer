@@ -26,12 +26,14 @@ export default {
 <style scoped>
   /* CSS styles for Songs component */
   .songs-container{
-    padding-bottom: 5%;
-    margin: 0 auto;
+    height: auto;
+    width: auto;
+    display: flex;
+    padding-bottom: 500px;
   }
   .song-item{
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     display: inline-flex;
     flex-wrap: wrap;
     margin: 10px 10px 10px 10px;
