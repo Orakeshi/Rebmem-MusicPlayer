@@ -30,8 +30,10 @@ export default {
 <style scoped>
   /* CSS styles for Songs component */
   .songs-container{
-    padding-bottom: 5%;
-    margin: 0 auto;
+    position: relative;
+    top: 0;
+    height: auto;
+
   }
   .song-item{
     height: 150px;

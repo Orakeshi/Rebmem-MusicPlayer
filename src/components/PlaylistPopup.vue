@@ -3,19 +3,18 @@
     <div id="popup-form">
       <textarea id="playlist-name" placeholder="Enter playlist name:"></textarea>
 
-      <div id="form-button-parents">
-        <div class="form-buttons" id="submit-songs" @click="submitPlaylist()">
-          <h2>Submit</h2>
-        </div>
-      </div>
-
       <div id="add-songs-container">
         <div id="songs-add-parent">
           <div class="song-item" v-for="song in songs" :id="'popup'+song.id" :key="song.id" @click="selectSong('popup'+song.id, song)">
             <img id="song-select-img" :src="song.imgdata">
-            <p id="song-title">{{song.title}}</p>
+            <div id="song-title-parent">
+              <p id="song-title">{{song.title}}</p>
+            </div>
           </div>
         </div>
+      </div>
+      <div id="confirm-playlist" style="cursor: pointer" @click="submitPlaylist()">
+        <img src="../../public/images/check.png">
       </div>
 
     </div>
@@ -46,7 +45,7 @@ export default {
     selectSong: function (songId, song){
       let temp = document.getElementById(songId);
       if (this.selectedSongs.includes(song)){
-        temp.style.backgroundColor = '#007db5';
+        temp.style.backgroundColor = '#808E9B';
 
         let elementIndex = this.highlightedSongs.indexOf(temp);
         let index = this.selectedSongs.indexOf(song);
@@ -103,13 +102,14 @@ export default {
 
       for (let i in this.highlightedSongs){
         let currentTemp = this.highlightedSongs[i]
-        currentTemp.style.backgroundColor = '#007db5';
+        currentTemp.style.backgroundColor = '#808E9B';
       }
       this.highlightedSongs = []
       console.log(playlistData)
       window.emitter.emit("newplaylist", playlistData)
       console.log(this.songs)
     },
+
     updateOptions(){
       console.log("in")
       console.log(this.songs)
@@ -168,41 +168,80 @@ export default {
 </script>
 
 <style scoped>
+  #confirm-playlist{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+  }
+  #confirm-playlist img{
+    height: 32px;
+    width: 32px;
+  }
   #create-playlist-popup{
     position: absolute;
-    top: 50%;
+    top: 10%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -10%);
+    transform: translate(-50%, -0%);
     width: 50%;
     height: 50%;
-    border: 1px solid red;
+
+    border-radius: 10px;
     display: block;
   }
   #popup-form{
     position: relative;
     width: 100%;
     height: 100%;
-    background: orange;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    background: #1E272E;
   }
   #songs-add-parent{
     height: 200px;
     width: 100%;
     position: relative;
-    border: 2px yellow;
+    margin: 0;
+    padding: 0;
     pointer-events: none;
   }
 
   #add-songs-container{
-    height: 60%;
+    height: 85%;
     width: 100%;
-    position: absolute;
-    overflow: auto;
+    border-radius: 10px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #add-songs-container::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  #add-songs-container::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  #add-songs-container::-webkit-scrollbar-thumb {
+    background-color: #808E9B;
+    border-radius: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: content-box;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  #add-songs-container::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
   }
   .song-item{
     height: 50px;
     width: 100%;
-    background: #007db5;
+    background: #808e9b;
+    border: #1E272E 2px solid;
     cursor: pointer;
     pointer-events: auto;
   }
@@ -227,22 +266,42 @@ export default {
 
   #playlist-name{
     position: relative;
-    height: 20px;
+    height: 35px;
     width: 100%;
     padding: 0;
     margin: 0;
     border: none;
     outline: none;
+    border-radius: 5px;
     resize: none;
+    font-size: 20px;
+  }
+  ::placeholder{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
   }
   #song-select-img{
     width: 50px;
     height: 50px;
-    display: inline-flex;
+  }
+  #song-title-parent{
+    display: inline-block;
+    position: relative;
+    height: auto;
+    width: auto;
+    top: 0;
+    margin-left: 5px;
+
+    transform: translateY(-100%);
   }
   #song-title{
-    display: inline-flex;
-    margin: 3%;
+    position: relative;
+    height: auto;
+    color: white;
+    font-size: 20px;
+    width: auto;
   }
   #library-parent{
     display: none;

@@ -52,7 +52,7 @@ export default {
     width: 100%;
     top: 0;
     overflow: hidden;
-    margin: 0;
+    /*margin: 0;*/
     background-color: #1E272E;
     padding: 1px;
     display: table;

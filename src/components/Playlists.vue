@@ -5,8 +5,9 @@
         <div v-on:click="showPlaylist" id="playlist-create-button">
           <h2>create</h2>
         </div>
+        <CreatePlaylists :key="componentKey" id="create-playlist" :playlists="playlists"></CreatePlaylists>
       </div>
-      <CreatePlaylists :key="componentKey" id="create-playlist" :playlists="playlists"></CreatePlaylists>
+
     </div>
     <div id="song-display-parent" :key="componentKey">
       <div style="display: none" v-for="playlist in playlists" :id="'playlistmain'+playlist.id" :key="playlist.id">
@@ -61,6 +62,8 @@ export default {
         window.emitter.emit("refreshLibrary")
         this.playlists.push(playlistData)
         console.log("waitin in here")
+        playlistData = ""
+        this.addPlaylistData()
         return
       }
       else {
@@ -118,12 +121,6 @@ export default {
     forcedUpdate() {
       this.componentKey += 1;
     },
-    deleteDiv(){
-      this.playlists.pop();
-    },
-    addDiv(){
-      this.playlists.push(this.playlists[1])
-    },
     // Function used to adjust the controls picture and name when song clicked ff
     showPlaylist: function(){
       //this.addDiv()
@@ -179,24 +176,30 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-    padding-bottom: 100px;
+    position: absolute;
   }
   #playlist-selection-parent{
     height: 100%;
+    background-color: #1E272E;
     width: 150px;
+    position: relative;
     float: left;
-    border: 2px solid pink;
+    margin: 0 auto;
     overflow: auto;
+  }
+  #create-playlist{
+    position: relative;
+    top: 0;
+    padding: 0;
+    margin: 0;
   }
   #song-display-parent{
     height: 100%;
     width: 80%;
     flex-grow: 1;
-    border: 2px solid green;
   }
   #created-playlists-container{
     height: 100%;
-    border: 2px solid yellow;
   }
   #create-playlist{
     width: 100%;
@@ -204,21 +207,52 @@ export default {
   }
 
   #playlist-create-button{
-    border: 5px solid purple;
-  }
-  #playlist-popup{
-    display: none;
+    background-color: #485460;
+    height: 50px;
   }
   #playlist-creation-container{
     position: relative;
     width: 100%;
     height: 100%;
   }
-  #playlist-creation-container h2{
+  #playlist-create-button h2{
     color: white;
-    left: 50%;
     cursor: pointer;
     margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  #playlist-popup{
+    display: none;
+  }
+
+
+
+  #playlist-selection-parent::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  #playlist-selection-parent::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  #playlist-selection-parent::-webkit-scrollbar-thumb {
+    background-color: #808E9B;
+    border-radius: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: content-box;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  #playlist-selection-parent::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
   }
 
 </style>

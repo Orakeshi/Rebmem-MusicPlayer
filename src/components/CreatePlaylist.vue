@@ -14,10 +14,6 @@
 </template>
 
 <script>
-window.addEventListener("load", ()=>{
-
-})
-
 export default {
   name: "Playlist",
   props: {
@@ -60,7 +56,7 @@ export default {
     height: 100%;
     background: #1E272E;
     cursor: pointer;
-    border: 2px solid blue;
+    border: 1px solid grey;
   }
   .playlist-img{
     position: relative;
@@ -76,12 +72,17 @@ export default {
     width: 50%;
     margin: 0;
     padding: 0;
+
   }
   .playlist-name{
     width: 50%;
     margin: 0;
+    position: relative;
+    left: 50%;
+    transform: translate(-90%, -50%);
     padding: 0;
     color: white;
     font-size: 12px;
+    top: 50%;
   }
 </style>
