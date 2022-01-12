@@ -14,7 +14,7 @@
         </div>
       </div>
       <div id="confirm-playlist" style="cursor: pointer" @click="submitPlaylist()">
-        <img src="../../public/images/check.png">
+        <img src="../../../public/images/check.png">
       </div>
 
     </div>
@@ -27,7 +27,7 @@
 
 <script>
 // All imports and requires for component
-import Library from "./Library";
+import Library from "../UI/Library";
 const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()

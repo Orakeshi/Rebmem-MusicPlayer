@@ -4,11 +4,17 @@
     <div class="nav-parent-container">
       <Navigation></Navigation>
     </div>
+    <div id="search-bar" class="search-parent-container">
+      <Search></Search>
+    </div>
     <div id="library-container" class="library-parent-container">
       <Library></Library>
     </div>
     <div id="playlists-container" class="playlists-parent-container">
       <Playlists></Playlists>
+    </div>
+    <div id="search-library-container">
+      <SearchLibrary></SearchLibrary>
     </div>
     <div id="settings-container" class="settings-parent-container">
       <Settings></Settings>
@@ -22,18 +28,22 @@
 
 <script>
 // Import all VUE components needed
-import Library from './components/Library';
-import Controls from './components/Controls';
-import Navigation from "./components/Navigation";
-import Playlists from "./components/Playlists";
-import Settings from "./components/Settings";
+import Library from './components/UI/Library';
+import Controls from './components/Songs/Controls';
+import Navigation from "./components/UI/Navigation";
+import Playlists from "./components/Playlists/Playlists";
+import Settings from "./components/UI/Settings";
 
 import Emitter from 'tiny-emitter';
+import Search from "@/components/Search/Search";
+import SearchLibrary from "@/components/Search/SearchLibrary";
 window.emitter = new Emitter();
 
 export default {
   name: 'App',
   components: {
+    SearchLibrary,
+    Search,
     Settings,
     Playlists,
     Navigation,
@@ -117,6 +127,8 @@ export default {
     }
 
     window.emitter.on('showContent', function (itemToShow){
+      let searchBar = document.getElementById("search-bar")
+      let searchContainer = document.getElementById("search-library-container")
       // Conditionals to check what container has been clicked
       if (itemToShow == "library") {
         if (currentClicked) {
@@ -130,6 +142,7 @@ export default {
         } else {
           resetElement(currentElement, currentNav);
           setTimeout(() => {
+            searchBar.style.display="block"
             showElement(libraryContainer, libraryNav)
           }, 300)
         }
@@ -146,6 +159,8 @@ export default {
           currentClicked = false;
           return
         } else {
+          searchBar.style.display="none"
+          searchContainer.style.display="none"
           resetElement(currentElement, currentNav);
           setTimeout(() => {
             showElement(playlistsContainer, playlistsNav)
@@ -165,6 +180,8 @@ export default {
           currentClicked = false;
           return
         } else {
+          searchBar.style.display="none"
+          searchContainer.style.display="none"
           resetElement(currentElement, currentNav);
           setTimeout(() => {
             showElement(settingsContainer, settingsNav)

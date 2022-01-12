@@ -18,7 +18,7 @@
       </div>
     </div>
     <div id="logo-nav" class="nav-parent-element">
-      <img src="../../public/images/Logo.png">
+      <img src="../../../public/images/Logo.png">
       <!--      img will go here of logo-->
     </div>
 
