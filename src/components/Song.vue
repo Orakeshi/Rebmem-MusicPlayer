@@ -1,8 +1,8 @@
 <template>
   <!-- vue on click used to iterate through each song data and create div elements -->
-  <div v-on:click="playSong" class="song">
+  <div v-on:click="playSong" :key="componentKey" class="song">
     <div class="song-img">
-      <img id="set-src" v-bind:src="song.imgdata">
+      <img id="set-src">
     </div>
 
     <div class="song-name" id="song-name-container">
@@ -25,8 +25,19 @@ export default {
   props: {
     song: Object
   },
+  data(){
+    return{
+      componentKey: 0
+    }
+  },
 
   methods: {
+    forceRerender(){
+      this.componentKey +=1;
+    },
+    mounted(){
+      this.forceRerender()
+    },
     // Function used to adjust the controls picture and name when song clicked
     playSong: function(){
       document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)

@@ -2824,7 +2824,7 @@ chokidar@^2.1.8:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.0.2, chokidar@^3.4.1:
+chokidar@^3.0.2, chokidar@^3.4.1, chokidar@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
   integrity sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==
@@ -4001,6 +4001,13 @@ electron-publish@22.14.5:
     fs-extra "^10.0.0"
     lazy-val "^1.0.5"
     mime "^2.5.2"
+
+electron-reload@^2.0.0-alpha.1:
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/electron-reload/-/electron-reload-2.0.0-alpha.1.tgz#6cad98df96695ca1d5462dc9407f7c620028ce99"
+  integrity sha512-hTde7gv0TEqxbxlB3pj2CwoyCQ9sdiQrcP8GkpzhosxyVeYM3mZbMEVKCZK3L0fED7Mz5A9IWmK7zEvi4H3P1g==
+  dependencies:
+    chokidar "^3.5.2"
 
 electron-to-chromium@^1.4.17:
   version "1.4.34"
@@ -9911,6 +9918,11 @@ vue@^3.0.0:
     "@vue/runtime-dom" "3.2.26"
     "@vue/server-renderer" "3.2.26"
     "@vue/shared" "3.2.26"
+
+vuex@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
+  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
 
 walkdir@^0.4.1:
   version "0.4.1"
