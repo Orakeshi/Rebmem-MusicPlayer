@@ -14,12 +14,12 @@
     </div>
     <div id="play-icon-container">
 <!--      <button id="play-icon"></button>-->
-      <img id="play-icon" src="../../public/images/pause-icon.png">
+      <img id="play-icon" src="../../public/images/play-icon.png">
     </div>
     <!-- Container for the volume of the application -->
     <div id="volume-container">
 <!--      <button id="mute-icon"></button>-->
-      <img id="mute-icon" src="../../public/images/pause-icon.png">
+      <img id="mute-icon" src="../../public/images/speaker-icon.png">
       <div id="volume-controls-container">
         <output id="volume-output">100</output>
         <input class="slider-input" type="range" id="volume-slider" max="100" value="100">
@@ -39,11 +39,9 @@
 </template>
 
 <script>
-  // NPM packages needed for the application
-
   // Wait until window is loaded
   window.addEventListener('load', function () {
-    // Store all HTML elements in varaibles for access at later date
+    // Store all HTML elements in variables for access at later date
     const playIconContainer = document.getElementById('play-icon');
     const audioPlayerContainer = document.getElementById('audio-player-container');
     const seekSlider = document.getElementById('seek-slider');
@@ -63,13 +61,13 @@
       }
       if(playState === 'play') {
         audio.play();
+        playIconContainer.setAttribute("src", "../images/pause-icon.png")
 
-        //playAnimation.playSegments([14, 27], true);
         requestAnimationFrame(whilePlaying);
         playState = 'pause';
       } else {
         audio.pause();
-        //playAnimation.playSegments([0, 14], true);
+        playIconContainer.setAttribute("src", "../images/play-icon.png")
         cancelAnimationFrame(raf);
         playState = 'play';
       }
@@ -82,12 +80,12 @@
 
     muteIconContainer.addEventListener('click', () => {
       if(muteState === 'unmute') {
-        //muteAnimation.playSegments([0, 15], true);
         audio.muted = true;
+        muteIconContainer.setAttribute("src", "../images/mute-icon.png")
         muteState = 'mute';
       } else {
-        //muteAnimation.playSegments([15, 25], true);
         audio.muted = false;
+        muteIconContainer.setAttribute("src", "../images/speaker-icon.png")
         muteState = 'unmute';
       }
     });
@@ -104,9 +102,7 @@
       showRangeProgress(e.target);
     });
 
-
     /** Implementation of the functionality of the audio player */
-
     const audio = document.querySelector('audio');
     const durationContainer = document.getElementById('duration');
     const currentTimeContainer = document.getElementById('current-time');
@@ -219,6 +215,7 @@
     position: relative;
     height: 35px;
     margin: auto;
+    cursor: pointer;
     width: 35px;
   }
   #play-icon {
@@ -292,9 +289,11 @@
   }
   #mute-icon {
     position: relative;
-    width: 35px;
-    height: 35px;
-    margin-left: 15px;
+    width: 30px;
+    height: 30px;
+    margin-top: 3px;
+    margin-left: 17px;
+    cursor: pointer;
   }
   #volume-output{
     position: relative;

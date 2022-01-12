@@ -18,10 +18,7 @@
   const path = window.require("path")
   const os = window.require("os").homedir()
 
-  //const songFolder = './src/assets/songs';
   const songFolder = path.join(os, 'Music')
-  //const songFolder = app.getPath('music')
-  console.log(songFolder);
 
 export default {
     name: 'Library',
@@ -45,10 +42,10 @@ export default {
         if(err){
           console.log(err);
         }
-        else{
+        else {
           // If a file ends with .mp3 add to application
           files.forEach(file => {
-            if(file.endsWith(".mp3")) {
+            if (file.endsWith(".mp3")) {
               let newSong = {
                 id: songId,
                 title: "",
@@ -56,16 +53,12 @@ export default {
                 audiosrc: file,
                 imgdata: ""
               }
-              console.log(path.join(songFolder,'/',file))
               // create a new parser from a node ReadStream
-              mm(fs.createReadStream(songFolder+"/"+file), function (err, metadata) {
+              mm(fs.createReadStream(songFolder + "/" + file), function (err, metadata) {
                 if (err) throw err;
-                //console.log(metadata);
-                try {
-                  if (metadata.picture.length > 0) {
-                    var picture = metadata.picture[0];
-                    newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
-                  }
+                if (metadata.picture.length > 0) {
+                  var picture = metadata.picture[0];
+                  newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
 
@@ -78,29 +71,31 @@ export default {
                   let contNew = document.getElementById(newSong.id);
                   let allP = contNew.getElementsByTagName('p');
                   allP[0].innerHTML = newSong.title;
-                  } catch (err) {
-                    console.log(err);
-                    let cont = document.getElementById(newSong.id);
-                    let allImg = cont.getElementsByTagName('img');
-                    allImg[0].setAttribute("src", "\"https://blog.sqlauthority.com/wp-content/uploads/2007/06/null-500x259.png\"")
 
-                    let contNew = document.getElementById(newSong.id);
-                    let allP = contNew.getElementsByTagName('p');
-                    allP[0].innerHTML = file.substring(0, file.length - 4);
-                    newSong.artist = "N/A";
-                  }
-                });
+                } else {
+                  // Set images
+                  console.log(err);
+                  let cont = document.getElementById(newSong.id);
+                  let allImg = cont.getElementsByTagName('img');
+                  allImg[0].setAttribute("src", "../images/Large-Logo.png")
 
-                this.songs.push(newSong);
-                songId +=1
-                console.log(file);
+                  //Set Song names
+                  let contNew = document.getElementById(newSong.id);
+                  let allP = contNew.getElementsByTagName('p');
+                  allP[0].innerHTML = file.substring(0, file.length - 4);
+                  newSong.imgdata = "../images/Large-Logo.png";
+                  newSong.title = file.substring(0, file.length - 4);
+                  newSong.artist = "N/A";
+                }
+              });
+              this.songs.push(newSong);
+              songId += 1
             }
           });
         }
-      });
-    }
-
-  }
+      })
+    },
+}
 </script>
 
 <style scoped>

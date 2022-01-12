@@ -17,7 +17,6 @@
   const path = window.require("path")
 
   const songFolder = './src/assets/songs';
-  console.log(songFolder);
   // Simple API - will fetch all tags
   const jsmediatags = window.require("jsmediatags");
 
