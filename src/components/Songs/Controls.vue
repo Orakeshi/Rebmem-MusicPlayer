@@ -12,10 +12,22 @@
     <div id="song-name-container">
       <p id="song-name"></p>
     </div>
-    <div id="play-icon-container">
-<!--      <button id="play-icon"></button>-->
-      <img id="play-icon" src="../../../public/images/play-icon.png">
+    <div id="song-control-parent">
+      <div id="previous-song-container" @click="previousSong()">
+        <img id="previous-song-icon" src="../../../public/images/previous-icon.png">
+      </div>
+      <div id="play-icon-container">
+        <!--      <button id="play-icon"></button>-->
+        <img id="play-icon" src="../../../public/images/play-icon.png">
+      </div>
+      <div id="next-song-container" @click="nextSong()">
+        <img id="next-song-icon" src="../../../public/images/next-icon.png">
+      </div>
+      <div id="shuffle-song-container" @click="shuffleSong()">
+        <img id="shuffle-song-icon" src="../../../public/images/shuffle-icon.png">
+      </div>
     </div>
+
     <!-- Container for the volume of the application -->
     <div id="volume-container">
 <!--      <button id="mute-icon"></button>-->
@@ -39,6 +51,13 @@
 </template>
 
 <script>
+  const path = window.require("path")
+  const os = window.require("os").homedir()
+  const songFolder = path.join(os, 'Music')
+  let currentId = 0;
+  let originalData
+  let shuffle = false;
+
   // Wait until window is loaded
   window.addEventListener('load', function () {
     // Store all HTML elements in variables for access at later date
@@ -48,7 +67,58 @@
     const volumeSlider = document.getElementById('volume-slider');
     const muteIconContainer = document.getElementById('mute-icon');
     let playState = 'play';
+
     let muteState = 'unmute';
+    /***
+     * Continuously play songs without button input
+     * @param songData
+     * @param clickedId
+     */
+    window.continuePlay = function (songData, clickedId){
+      if (songData !== originalData){
+        currentId=0
+      }
+
+      originalData = songData;
+      let currentSongs = songData
+      let audio = document.getElementById("audio-player-test")
+
+      // Check if user clicked song
+      if (clickedId !== ""){
+        for (let i in currentSongs){
+          if (currentSongs[i].id == clickedId){
+            currentId = currentSongs.indexOf(currentSongs[i])
+          }
+        }
+      }
+
+      audio.loop=false
+      audio.onended = function (){
+        currentId +=1
+        if (shuffle){
+          window.shuffleOrder()
+        }
+
+        if (currentId>=currentSongs.length){
+          currentId = 0
+        }
+
+        audio.setAttribute("src", "file:///"+songFolder+"/"+currentSongs[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", currentSongs[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=currentSongs[currentId].title
+        window.changeSong('play')
+        clickedId = "";
+      }
+    }
+
+    /***
+     * Sets currentID to a random int in range of song data
+     */
+    window.shuffleOrder = function (){
+      if (shuffle){
+        currentId = Math.floor(Math.random() * originalData.length);
+      }
+    }
 
     /***
      * changeSong is responsible for bypassing the animation
@@ -181,7 +251,67 @@
   })
 
   export default {
-    name: "Controls"
+    name: "Controls",
+    data(){
+      return{
+        shuffleSongOrder: []
+      }
+    },
+    methods: {
+      /***
+       * Handles playing next song in QUEUE on button press
+       */
+      nextSong(){
+        currentId +=1
+        if (shuffle){
+          window.shuffleOrder()
+        }
+
+        if (currentId<=0){
+          currentId = 1
+        }
+
+        if (currentId>=originalData.length){
+          currentId = 0
+        }
+        let audio = document.getElementById("audio-player-test")
+        audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=originalData[currentId].title
+        window.changeSong('play')
+
+      },
+      /***
+       * Handles playing previous song in QUEUE on button press
+       */
+      previousSong(){
+        currentId -=1
+
+        if (currentId<=0){
+          currentId = 0
+        }
+        let audio = document.getElementById("audio-player-test")
+        audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=originalData[currentId].title
+        window.changeSong('play')
+      },
+      /***
+       * Repsonsibe for setting button state
+       * Sets shuffle boolean value
+       */
+      shuffleSong(){
+        if (shuffle == false){
+          document.getElementById("shuffle-song-icon").setAttribute("src", "../../images/shuffle-icon-on.png")
+          this.shuffleSongOrder = []
+        }
+        else{
+          document.getElementById("shuffle-song-icon").setAttribute("src", "../../images/shuffle-icon.png")
+        }
+        shuffle =! shuffle
+      },
+
+    }
   }
 </script>
 
@@ -211,20 +341,76 @@
     height: 100%;
     width: 100%;
   }
-  #play-icon-container{
+  #song-control-parent{
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    left: 50%;
+    padding-top: 5px;
+    transform: translateX(-50%);
+  }
+  #previous-song-container{
+    display: inline-block;
     position: relative;
     height: 35px;
-    margin: auto;
+    top: 50%;
+    transform: translateY(-20%);
+    padding-right: 10px;
+    cursor: pointer;
+    width: 35px;
+  }
+  #play-icon-container{
+    display: inline-block;
+    position: relative;
+    height: auto;
+    margin: 0;
+    cursor: pointer;
+    width: auto;
+  }
+  #next-song-container{
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    margin: 0;
+    padding-left: 10px;
+    top: 50%;
+    transform: translateY(-20%);
+    cursor: pointer;
+    width: 35px;
+  }
+  #shuffle-song-container{
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    top: 50%;
+    transform: translateY(-20%);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
     cursor: pointer;
     width: 35px;
   }
   #play-icon {
-    width: 35px;
-    max-width: 35px;
-    height: 35px;
-    margin: 0 auto;
     color: white;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
     /*margin: 20px 2.5% 10px 2.5%;*/
+  }
+  #next-song-icon{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }
+  #previous-song-icon{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }
+  #shuffle-song-icon{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
   }
   button {
     padding: 0;
@@ -236,10 +422,11 @@
 
 
   #controls-parent{
-    position: relative;
+    position: absolute;
     margin: 0;
+    bottom: 0;
+    height: 40%;
     width: 100%;
-    height: auto;
   }
   #song-progress-container{
     position: absolute;

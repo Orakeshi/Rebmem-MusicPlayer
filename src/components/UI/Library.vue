@@ -19,6 +19,8 @@
 
   const songFolder = path.join(os, 'Music')
 
+  //let currentId = 0;
+
 export default {
     name: 'Library',
     props:  {
@@ -33,8 +35,16 @@ export default {
         songs: []
       }
     },
+  methods: {
+
+  },
     mounted () {
       this.$emit('songs', this.songs);
+
+      window.addEventListener("load", ()=>{
+        //this.PlaySongs()
+      })
+
     },
     beforeMount()
     {
@@ -49,15 +59,18 @@ export default {
           files.forEach(file => {
             if (file.endsWith(".mp3")) {
               let newSong = {
-                id: songId,
+                id: "",
                 title: "",
                 artist: "",
                 audiosrc: file,
                 imgdata: ""
               }
+              newSong.id = "library"+songId
               // create a new parser from a node ReadStream
               mm(fs.createReadStream(songFolder + "/" + file), function (err, metadata) {
                 if (err) throw err;
+
+
 
                 let cont = document.getElementById(newSong.id);
                 let allImg = cont.getElementsByTagName('img');

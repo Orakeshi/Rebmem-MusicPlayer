@@ -84,8 +84,8 @@ export default {
             audiosrc: "",
           }
 
-          newSong.id = "playlist-test"+this.playlist.id+songId;
           newSong.title = playlist.song[i].title;
+          newSong.id = playlist.title+songId;
           newSong.imgdata = "../images/Large-Logo.png"
           newSong.audiosrc = playlist.song[i].audiosrc;
 
@@ -112,8 +112,8 @@ export default {
           audiosrc: "",
         }
 
-        newSong.id = "playlist-test"+this.playlist.id+songId;
         newSong.title = playlist.songs[i].title;
+        newSong.id = playlist.title+songId;
         newSong.imgdata = "../images/Large-Logo.png"
         newSong.audiosrc = playlist.songs[i].audiosrc;
 
