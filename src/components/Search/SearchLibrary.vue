@@ -15,13 +15,17 @@ import Songs from '../Songs/Songs';
 import Library from "@/components/UI/Library";
 
 let songSearch = "";
-
+let titleToHighlight = "";
 export default {
     name: 'SearchLibrary',
     components: {
       Library,
       Songs,
     },
+  /***
+   * Data needed for component
+   * @returns {{songs: *[], songsearched: *[]}}
+   */
     data(){
       // Store array of song data
       return {
@@ -30,32 +34,49 @@ export default {
       }
     },
     methods: {
+      /***
+       * Populates array with library data
+       * @param e
+       */
       populateSongs(e){
         this.songs = e
       },
+      /***
+       * Handles updating the song cards for the searched songs
+       */
       updateCards(){
-        console.log("in sir")
         this.$nextTick(function (){
           for (let i in this.songsearched){
             let currentSong = this.songsearched[i]
-            console.log(currentSong)
             let songCard = document.getElementById(currentSong.id)
-            //console.log(songCard)
+
             let allImg = songCard.getElementsByTagName('img');
             let allP = songCard.getElementsByTagName('p');
 
             allImg[0].setAttribute("src", currentSong.imgdata)
-            // Set Names
             allP[0].innerHTML = currentSong.title;
+
+            // Code below handles highlighting specific characters searched
+            let innerHTML = allP[0].innerHTML
+            let index = allP[0].innerHTML.toLowerCase().indexOf(titleToHighlight);
+            if (index >= 0){
+              innerHTML = innerHTML.substring(0, index) + "<span style='background-color: yellow; color: black'>" + innerHTML.substring(index,index+titleToHighlight.length) + "</span>" + innerHTML.substring(index + titleToHighlight.length);
+              allP[0].innerHTML = innerHTML
+            }
           }
         })
       },
+      /***
+       * Updates the container with the song components
+       */
       updateView(){
         let songId =1
-        console.log(songSearch)
+
         for (let i in this.songs){
           let title = this.songs[i].title.toLowerCase()
           let songLower = songSearch.toLowerCase()
+          titleToHighlight = songLower
+
           if (title.includes(songLower)){
             let newSong = {
               id: "search-song"+songId,
@@ -67,7 +88,6 @@ export default {
             newSong.title = this.songs[i].title
             newSong.audiosrc = this.songs[i].audiosrc
 
-            console.log(newSong)
             this.songsearched.push(newSong)
             songId +=1
           }
@@ -78,6 +98,9 @@ export default {
           document.getElementById("library-container").style.display="none"
         })
       },
+      /***
+       * Handles Checking if a song has been searched for
+       */
       checkData(){
         if (songSearch == "resetsongs"){
           this.songsearched = []
@@ -90,6 +113,7 @@ export default {
             }, 500)
         }
         else{
+          // IF song searched. Update container view etc
           this.songsearched = []
           this.updateView()
           songSearch = ""
@@ -97,15 +121,19 @@ export default {
         }
       }
     },
+  /***
+   * Responsible for setting search container view to active or hidden dependent on search
+   */
   mounted() {
+    let searchedContainer = document.getElementById("search-library-container")
+    let libraryContainer = document.getElementById("library-container")
     window.emitter.on("searchsong", function (songToSearch){
-      document.getElementById("search-library-container").style.display="block"
+      searchedContainer.style.display="block"
       songSearch = songToSearch
-      console.log(songSearch)
     })
     window.emitter.on("resetsong", function (){
-      document.getElementById("search-library-container").style.display="none"
-      document.getElementById("library-container").style.display="block"
+      searchedContainer.style.display="none"
+      libraryContainer.style.display="block"
       songSearch = "resetsongs"
     })
     this.checkData()
@@ -129,9 +157,11 @@ export default {
     background: #485460;
   }
 
+
   #test-img{
     width: 100%;
     height: 100%;
     position: absolute;
   }
+
 </style>

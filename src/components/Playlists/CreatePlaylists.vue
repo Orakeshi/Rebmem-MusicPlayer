@@ -24,16 +24,17 @@ export default {
 
 <style scoped>
 /* CSS styles for Songs component */
-.playlists-container{
-  padding-bottom: 5%;
-  margin: 0 auto;
-}
-.playlist-item{
-  height: 80px;
-  width: 100%;
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+  .playlists-container{
+    padding-bottom: 5%;
+    margin: 0 auto;
+  }
+  .playlist-item{
+    height: 50px;
+    margin-bottom: 5px;
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
 </style>

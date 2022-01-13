@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="openPlaylist" :key="componentKey" class="playlist">
+  <div v-on:click="openPlaylist" :key="componentKey" class="playlist button" id="playlist-card">
     <div class="playlist-img">
       <img :id="'playlist'+playlist.id" v-bind:src="playlist.playlistimgdata">
     </div>
@@ -30,6 +30,8 @@ export default {
      */
     openPlaylist: function(){
       let playlist = document.getElementById("playlistmain"+this.playlist.id)
+
+      window.updateAllCards()
       window.emitter.emit('openplaylist', playlist)
     },
     forceRerender(){
@@ -53,14 +55,18 @@ export default {
 </script>
 
 <style scoped>
+  .button:active {
+    transform: translateY(4px);
+  }
   .playlist{
     position: relative;
     display: block;
     flex-flow: column;
-    width: 100%;
+    width: 95%;
     height: 100%;
     background: #1E272E;
     cursor: pointer;
+    border-radius: 15px;
     border: 1px solid grey;
   }
   .playlist-img{
@@ -71,6 +77,8 @@ export default {
   }
   .playlist-img img{
     height: 100%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     width: 100%;
   }
   #playlist-name-container{

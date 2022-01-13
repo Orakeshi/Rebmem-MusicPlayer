@@ -5,16 +5,19 @@
         <textarea id="song-searched" placeholder="search"></textarea>
       </div>
     </div>
-    <div id="search-button-container" @click="searchSong">
-      <div id="search-button">
-        <img src="../../../public/images/check.png">
+    <div id="button-controls-parent">
+      <div id="search-button-container" class="button" @click="searchSong">
+        <div id="search-button">
+          <img src="../../../public/images/search-icon.png">
+        </div>
+      </div>
+      <div id="reset-button-container" class="button" @click="resetSong">
+        <div id="reset-button">
+          <img src="../../../public/images/close.png">
+        </div>
       </div>
     </div>
-    <div id="reset-button-container" @click="resetSong">
-      <div id="reset-button">
-        <img src="../../../public/images/close.png">
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -22,11 +25,16 @@
 export default {
   name: "Search",
   methods: {
+    /***
+     * Emits that song is being searched for
+     */
     searchSong(){
       let songSearched = document.getElementById("song-searched").value;
       window.emitter.emit("searchsong", songSearched)
-      console.log("test")
     },
+    /***
+     * Used to reset song container view
+     */
     resetSong(){
       window.emitter.emit("resetsong")
     }
@@ -35,7 +43,9 @@ export default {
 </script>
 
 <style scoped>
-
+  .button:active {
+    transform: translateY(4px);
+  }
   #search-bar-parent{
     width: 100%;
     height: 40px;
@@ -62,13 +72,15 @@ export default {
     border-radius: 10px;
   }
 
-  #reset-button-container{
+  #button-controls-parent{
     flex-grow: 1;
     display: inline-flex;
   }
+   #reset-button-container{
+      float: left;
+  }
   #reset-button{
     padding: 0;
-
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -82,8 +94,7 @@ export default {
     width: auto;
   }
   #search-button-container{
-    flex-grow: 1;
-    display: inline-flex;
+    float: left;
     height: 100%;
   }
 
@@ -98,6 +109,8 @@ export default {
   #search-button img{
     height: auto;
     width: auto;
+    height: 32px;
+    width: 32px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);

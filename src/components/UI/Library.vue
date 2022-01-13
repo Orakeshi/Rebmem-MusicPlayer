@@ -38,12 +38,11 @@ export default {
   methods: {
 
   },
+  /***
+   * Emits song data to any vue component that requries it
+   */
     mounted () {
       this.$emit('songs', this.songs);
-
-      window.addEventListener("load", ()=>{
-        //this.PlaySongs()
-      })
 
     },
     beforeMount()
@@ -70,8 +69,6 @@ export default {
               mm(fs.createReadStream(songFolder + "/" + file), function (err, metadata) {
                 if (err) throw err;
 
-
-
                 let cont = document.getElementById(newSong.id);
                 let allImg = cont.getElementsByTagName('img');
                 let allP = cont.getElementsByTagName('p');
@@ -80,9 +77,9 @@ export default {
                   var picture = metadata.picture[0];
 
                   newSong.imgdata = URL.createObjectURL(new Blob([picture.data], {'type': 'image/' + picture.format}));
-                  //console.log(newSong.imgdata)
                   newSong.title = metadata.title;
                   newSong.artist = metadata.artist;
+
                 } else {
                   // Set images
                   console.log(err);
