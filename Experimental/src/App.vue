@@ -125,7 +125,6 @@
           }
           currentClicked = true
           libraryNav.style.backgroundColor="#485460";
-          console.log(currentElement.id)
           if(currentElement.id=="library-container"){
             console.log("library already on screen")
             currentClicked = false;

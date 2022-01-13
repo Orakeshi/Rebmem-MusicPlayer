@@ -53,7 +53,6 @@
                 audiosrc: path.join(songFolder,'../../../..','src/assets/songs/',file),
                 imgdata: ""
               }
-              console.log(path.join(songFolder,'../../../..','src/assets/songs/',file))
 
               // Use npm jsmediatags package to read song tags
               new jsmediatags.Reader(songFolder+"/"+file).setTagsToRead(["title", "artist", "picture"]).read({
@@ -82,7 +81,6 @@
 
               this.songs.push(newSong);
               songId +=1
-              console.log(file);
             }
             else{
               console.log("Not audio")

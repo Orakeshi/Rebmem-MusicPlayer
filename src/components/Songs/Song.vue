@@ -53,7 +53,6 @@ export default {
         document.getElementById("audio-player-test").setAttribute("src", "")
         console.log("Song is no longer available")
       }
-      console.log(this.songs)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')

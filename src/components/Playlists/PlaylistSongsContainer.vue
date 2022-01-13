@@ -111,7 +111,6 @@ export default {
           newSong.imgdata = this.allsongs[index].imgdata
         }
         else {
-          console.log("no")
           newSong.imgdata = "../images/Large-Logo.png"
         }
 
