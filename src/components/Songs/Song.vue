@@ -21,8 +21,6 @@ const path = window.require("path")
 const os = window.require("os").homedir()
 const songFolder = path.join(os, 'Music')
 
-// let currentId = 0;
-
 export default {
   name: "Song",
   props: {
@@ -42,7 +40,11 @@ export default {
     mounted(){
       this.forceRerender()
     },
-    // Function used to adjust the controls picture and name when song clicked
+    /***
+     * Checks if audio is in music folder
+     * If not - nothing plays
+     * Updates controls container and sets continues play in motion
+     */
     playSong: function(){
       if (fs.existsSync(songFolder+"/"+this.song.audiosrc)){
         document.getElementById("audio-player-test").setAttribute("src", "file:///"+songFolder+"/"+this.song.audiosrc)
@@ -55,6 +57,7 @@ export default {
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
+      // Method call below starts continuous play
       window.continuePlay(this.songs, this.song.id)
 
     },
@@ -62,9 +65,6 @@ export default {
 
     }
   },
-  mounted() {
-    //this.continuePlay()
-  }
 }
 </script>
 

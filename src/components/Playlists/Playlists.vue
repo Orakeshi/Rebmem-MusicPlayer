@@ -2,12 +2,12 @@
   <div class="playlists-parent">
     <div id="playlist-selection-parent">
       <div id="playlist-creation-container">
-        <div v-on:click="showPlaylist" id="playlist-create-button">
-          <h2>create</h2>
-        </div>
         <CreatePlaylists :key="componentKey" id="create-playlist" :playlists="playlists"></CreatePlaylists>
       </div>
-
+    </div>
+    <div v-on:click="showPlaylist" id="playlist-create-button">
+      <img id="show-menu" class="button" src="../../../public/images/plus.png">
+      <img id="close-menu" class="button" src="../../../public/images/negative.png">
     </div>
     <div id="song-display-parent" :key="componentKey">
       <div style="display: none" v-for="playlist in playlists" :id="'playlistmain'+playlist.id" :key="playlist.id">
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     componentKey: function() {
-      return "yay"
+      return "Hello BCS!"
     }
   },
   methods: {
@@ -92,7 +92,6 @@ export default {
         else{
           files.forEach(file => {
             if (file.includes("playlist")){
-              //console.log("doing")
               let newPlaylist = {
                 id: window.playlistId,
                 title: "",
@@ -107,7 +106,7 @@ export default {
                 else{
                   try {
                     let playlist = JSON.parse(jsonString);
-                    newPlaylist.songs = playlist.song
+                    newPlaylist.songs = playlist.songs
                     newPlaylist.title = playlist.title
                   }
                   catch (err) {
@@ -131,11 +130,20 @@ export default {
      * Handles showing popup container on button press
      */
     showPlaylist: function(){
+      let playlistPopWindow = document.getElementById("playlist-popup")
+      let closeMenuIcon = document.getElementById("close-menu")
+      let openMenuIcon = document.getElementById("show-menu")
       if (showPlaylist){
-        document.getElementById("playlist-popup").style.display="block";
+
+        playlistPopWindow.style.display="block";
+
+        closeMenuIcon.style.display="block"
+        openMenuIcon.style.display="none"
       }
       else{
-        document.getElementById("playlist-popup").style.display="none";
+        playlistPopWindow.style.display="none";
+        closeMenuIcon.style.display="none"
+        openMenuIcon.style.display="block"
       }
       showPlaylist =! showPlaylist
 
@@ -156,7 +164,6 @@ export default {
   mounted: function mounted() {
     let currentPlaylist ="";
       window.emitter.on('newplaylist', function (data){
-        console.log(data)
         playlistData = data;
       })
 
@@ -172,6 +179,10 @@ export default {
 </script>
 
 <style scoped>
+  .button:active {
+    transform: translateY(4px);
+  }
+
   h1{
     color: white;
   }
@@ -214,8 +225,10 @@ export default {
   }
 
   #playlist-create-button{
-    background-color: #485460;
     height: 50px;
+    position: absolute;
+    bottom: 150px;
+    right: 20px;
   }
   #playlist-creation-container{
     position: relative;
@@ -239,7 +252,17 @@ export default {
     display: none;
   }
 
-
+  #show-menu{
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+  }
+  #close-menu{
+    height: 32px;
+    width: 32px;
+    display: none;
+    cursor: pointer;
+  }
 
   #playlist-selection-parent::-webkit-scrollbar {
     width: 12px;

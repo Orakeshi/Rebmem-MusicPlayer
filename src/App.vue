@@ -158,6 +158,7 @@ export default {
         if (currentElement.id == "playlists-container") {
           currentClicked = false;
           return
+
         } else {
           searchBar.style.display="none"
           searchContainer.style.display="none"
@@ -169,7 +170,6 @@ export default {
 
 
       }
-
       if (itemToShow == "settings") {
         if (currentClicked) {
           return;

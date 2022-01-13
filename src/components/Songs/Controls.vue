@@ -13,18 +13,18 @@
       <p id="song-name"></p>
     </div>
     <div id="song-control-parent">
-      <div id="previous-song-container" @click="previousSong()">
-        <img id="previous-song-icon" src="../../../public/images/previous-icon.png">
+      <div id="previous-song-container"  @click="previousSong()">
+        <img id="previous-song-icon" class="button" src="../../../public/images/previous-icon.png">
       </div>
       <div id="play-icon-container">
         <!--      <button id="play-icon"></button>-->
         <img id="play-icon" src="../../../public/images/play-icon.png">
       </div>
       <div id="next-song-container" @click="nextSong()">
-        <img id="next-song-icon" src="../../../public/images/next-icon.png">
+        <img id="next-song-icon" class="button" src="../../../public/images/next-icon.png">
       </div>
       <div id="shuffle-song-container" @click="shuffleSong()">
-        <img id="shuffle-song-icon" src="../../../public/images/shuffle-icon.png">
+        <img id="shuffle-song-icon" class="button" src="../../../public/images/shuffle-icon.png">
       </div>
     </div>
 
@@ -103,6 +103,7 @@
           currentId = 0
         }
 
+        // Continue to play songs once audio ended
         audio.setAttribute("src", "file:///"+songFolder+"/"+currentSongs[currentId].audiosrc)
         document.getElementById("song-img").setAttribute("src", currentSongs[currentId].imgdata)
         document.getElementById("song-name").innerHTML=currentSongs[currentId].title
@@ -132,9 +133,9 @@
       if(playState === 'play') {
         audio.play();
         playIconContainer.setAttribute("src", "../images/pause-icon.png")
-
         requestAnimationFrame(whilePlaying);
         playState = 'pause';
+
       } else {
         audio.pause();
         playIconContainer.setAttribute("src", "../images/play-icon.png")
@@ -317,6 +318,10 @@
 
 <style scoped>
   /* Styles for the controls */
+  .button:active {
+    transform: translateY(4px);
+  }
+
   #song-name-container{
     position: relative;
     float: left;

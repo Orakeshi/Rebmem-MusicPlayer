@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     componentKey: function() {
-      return "yay"
+      return "Hello BCS!"
     }
   },
 

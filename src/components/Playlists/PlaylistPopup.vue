@@ -14,7 +14,7 @@
         </div>
       </div>
       <div id="confirm-playlist" style="cursor: pointer" @click="submitPlaylist()">
-        <img src="../../../public/images/check.png">
+        <img src="../../../public/images/check.png" class="button">
       </div>
 
     </div>
@@ -43,8 +43,6 @@ export default {
      */
     getSongs: function (e){
       this.songs = e
-
-      console.log(this.songs)
     },
     /***
      * Method handles highlighting song
@@ -53,11 +51,11 @@ export default {
      * @param song
      */
     selectSong: function (songId, song){
-      let temp = document.getElementById(songId);
+      let selectedSongId = document.getElementById(songId);
       if (this.selectedSongs.includes(song)){
-        temp.style.backgroundColor = '#808E9B';
+        selectedSongId.style.backgroundColor = '#808E9B';
 
-        let elementIndex = this.highlightedSongs.indexOf(temp);
+        let elementIndex = this.highlightedSongs.indexOf(selectedSongId);
         let index = this.selectedSongs.indexOf(song);
 
         if (elementIndex > -1){
@@ -69,12 +67,10 @@ export default {
         }
       }
       else{
-        temp.style.backgroundColor = 'green';
-        this.highlightedSongs.push(temp)
+        selectedSongId.style.backgroundColor = 'green';
+        this.highlightedSongs.push(selectedSongId)
         this.selectedSongs.push(song)
       }
-      console.log(songId)
-      console.log(this.selectedSongs)
     },
     /***
      * Responsible for writing playlist data to JSON file
@@ -95,14 +91,14 @@ export default {
         id: window.playlistId,
         title: playlistName,
         playlistimgdata: "../images/Large-Logo.png",
-        song: []
+        songs: []
       }
       window.playlistId +=1;
 
       for (let i in this.selectedSongs){
         let item = this.selectedSongs[i];
 
-        playlistData.song.push({
+        playlistData.songs.push({
           "title": item.title,
           "audiosrc": item.audiosrc,
           "imgdata": item.imgdata
@@ -117,9 +113,7 @@ export default {
         currentTemp.style.backgroundColor = '#808E9B';
       }
       this.highlightedSongs = []
-      console.log(playlistData)
       window.emitter.emit("newplaylist", playlistData)
-      console.log(this.songs)
     },
 
     /***
@@ -181,6 +175,9 @@ export default {
 </script>
 
 <style scoped>
+  .button:active {
+    transform: translateY(4px);
+  }
   #confirm-playlist{
     position: fixed;
     bottom: 0;
