@@ -12,10 +12,22 @@
     <div id="song-name-container">
       <p id="song-name"></p>
     </div>
-    <div id="play-icon-container">
-<!--      <button id="play-icon"></button>-->
-      <img id="play-icon" src="../../../public/images/play-icon.png">
+    <div id="song-control-parent">
+      <div id="previous-song-container" @click="previousSong()">
+        <img id="previous-song-icon" src="../../../public/images/previous-icon.png">
+      </div>
+      <div id="play-icon-container">
+        <!--      <button id="play-icon"></button>-->
+        <img id="play-icon" src="../../../public/images/play-icon.png">
+      </div>
+      <div id="next-song-container" @click="nextSong()">
+        <img id="next-song-icon" src="../../../public/images/next-icon.png">
+      </div>
+      <div id="shuffle-song-container" @click="shuffleSong()">
+        <img id="shuffle-song-icon" src="../../../public/images/shuffle-icon.png">
+      </div>
     </div>
+
     <!-- Container for the volume of the application -->
     <div id="volume-container">
 <!--      <button id="mute-icon"></button>-->
@@ -40,6 +52,13 @@
 
 <script>
   // Wait until window is loaded
+  const path = window.require("path")
+  const os = window.require("os").homedir()
+  const songFolder = path.join(os, 'Music')
+  let currentId = 0;
+  let originalData
+  let shuffle = false;
+
   window.addEventListener('load', function () {
     // Store all HTML elements in variables for access at later date
     const playIconContainer = document.getElementById('play-icon');
@@ -48,7 +67,49 @@
     const volumeSlider = document.getElementById('volume-slider');
     const muteIconContainer = document.getElementById('mute-icon');
     let playState = 'play';
+
     let muteState = 'unmute';
+
+    window.continuePlay = function (songData, clickedId){
+      
+      if (clickedId == ""){
+        if (shuffle){
+          this.shuffleOrder()
+        }
+      }
+
+      if (songData !== originalData){
+        currentId=0
+      }
+
+      originalData = songData;
+      let currentSongs = songData
+      let audio = document.getElementById("audio-player-test")
+
+      // Check if user clicked song
+      if (clickedId !== ""){
+        console.log(clickedId)
+        for (let i in currentSongs){
+          if (currentSongs[i].id == clickedId){
+            currentId = currentSongs.indexOf(currentSongs[i])
+          }
+        }
+      }
+
+      audio.loop=false
+      audio.onended = function (){
+        if (currentId>=currentSongs.length){
+          currentId = 0
+        }
+        audio.setAttribute("src", "file:///"+songFolder+"/"+currentSongs[currentId].audiosrc)
+        console.log(currentSongs[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", currentSongs[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=currentSongs[currentId].title
+        window.changeSong('play')
+        clickedId = "";
+        currentId +=1
+      }
+    }
 
     /***
      * changeSong is responsible for bypassing the animation
@@ -181,7 +242,68 @@
   })
 
   export default {
-    name: "Controls"
+    name: "Controls",
+    data(){
+      return{
+        shuffleSongOrder: []
+      }
+    },
+    methods: {
+      nextSong(){
+        currentId +=1
+        if (shuffle){
+          this.shuffleOrder()
+        }
+
+        if (currentId<=0){
+          currentId = 1
+        }
+
+        if (currentId>=originalData.length){
+          currentId = 0
+        }
+        let audio = document.getElementById("audio-player-test")
+        audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
+        console.log(originalData[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=originalData[currentId].title
+        window.changeSong('play')
+
+      },
+
+      previousSong(){
+        currentId -=1
+        // if (shuffle){
+        //
+        // }
+        if (currentId<=0){
+          currentId = 0
+        }
+        let audio = document.getElementById("audio-player-test")
+        audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
+        console.log(originalData[currentId].audiosrc)
+        document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
+        document.getElementById("song-name").innerHTML=originalData[currentId].title
+        window.changeSong('play')
+      },
+
+      shuffleSong(){
+        // for (let i in originalData.length){
+        //   Math.floor(Math.random() * 100);
+        // }
+        shuffle =! shuffle
+        if (shuffle == false){
+          this.shuffleSongOrder = []
+        }
+      },
+      shuffleOrder(){
+        if (shuffle){
+          console.log("shuffline")
+          currentId = Math.floor(Math.random() * originalData.length);
+          this.shuffleSongOrder.push(currentId)
+        }
+      }
+    }
   }
 </script>
 
@@ -211,20 +333,68 @@
     height: 100%;
     width: 100%;
   }
-  #play-icon-container{
+  #song-control-parent{
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #previous-song-container{
+    display: inline-block;
     position: relative;
     height: 35px;
-    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    width: 35px;
+  }
+  #play-icon-container{
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    margin: 0;
+    cursor: pointer;
+    width: 35px;
+  }
+  #next-song-container{
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    width: 35px;
+  }
+  #shuffle-song-container{
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
     cursor: pointer;
     width: 35px;
   }
   #play-icon {
-    width: 35px;
-    max-width: 35px;
-    height: 35px;
-    margin: 0 auto;
     color: white;
     /*margin: 20px 2.5% 10px 2.5%;*/
+  }
+  #next-song-icon{
+    height: 25px;
+    width: 25px;
+  }
+  #previous-song-icon{
+    height: 25px;
+    width: 25px;
+  }
+  #shuffle-song-icon{
+    height: 20px;
+    width: 25px;
   }
   button {
     padding: 0;
@@ -236,10 +406,11 @@
 
 
   #controls-parent{
-    position: relative;
+    position: absolute;
     margin: 0;
+    bottom: 0;
+    height: 40%;
     width: 100%;
-    height: auto;
   }
   #song-progress-container{
     position: absolute;

@@ -21,10 +21,13 @@ const path = window.require("path")
 const os = window.require("os").homedir()
 const songFolder = path.join(os, 'Music')
 
+// let currentId = 0;
+
 export default {
   name: "Song",
   props: {
-    song: Object
+    song: Object,
+    songs: Array
   },
   data(){
     return{
@@ -48,13 +51,20 @@ export default {
         document.getElementById("audio-player-test").setAttribute("src", "")
         console.log("Song is no longer available")
       }
-
-
+      console.log(this.songs)
       document.getElementById("song-img").setAttribute("src", this.song.imgdata)
       document.getElementById("song-name").innerHTML=this.song.title
       window.changeSong('play')
+      window.continuePlay(this.songs, this.song.id)
+
+    },
+    continuePlay(){
+
     }
   },
+  mounted() {
+    //this.continuePlay()
+  }
 }
 </script>
 
