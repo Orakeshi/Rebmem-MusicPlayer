@@ -71,13 +71,6 @@
     let muteState = 'unmute';
 
     window.continuePlay = function (songData, clickedId){
-      
-      if (clickedId == ""){
-        if (shuffle){
-          this.shuffleOrder()
-        }
-      }
-
       if (songData !== originalData){
         currentId=0
       }
@@ -98,16 +91,29 @@
 
       audio.loop=false
       audio.onended = function (){
+        currentId +=1
+        if (shuffle){
+          console.log("YES SHUFFLE")
+          window.shuffleOrder()
+        }
+
         if (currentId>=currentSongs.length){
           currentId = 0
         }
+
         audio.setAttribute("src", "file:///"+songFolder+"/"+currentSongs[currentId].audiosrc)
         console.log(currentSongs[currentId].audiosrc)
         document.getElementById("song-img").setAttribute("src", currentSongs[currentId].imgdata)
         document.getElementById("song-name").innerHTML=currentSongs[currentId].title
         window.changeSong('play')
         clickedId = "";
-        currentId +=1
+      }
+    }
+
+    window.shuffleOrder = function (){
+      if (shuffle){
+        console.log("shuffline")
+        currentId = Math.floor(Math.random() * originalData.length);
       }
     }
 
@@ -252,7 +258,7 @@
       nextSong(){
         currentId +=1
         if (shuffle){
-          this.shuffleOrder()
+          window.shuffleOrder()
         }
 
         if (currentId<=0){
@@ -296,13 +302,7 @@
           this.shuffleSongOrder = []
         }
       },
-      shuffleOrder(){
-        if (shuffle){
-          console.log("shuffline")
-          currentId = Math.floor(Math.random() * originalData.length);
-          this.shuffleSongOrder.push(currentId)
-        }
-      }
+
     }
   }
 </script>
