@@ -297,10 +297,15 @@
         // for (let i in originalData.length){
         //   Math.floor(Math.random() * 100);
         // }
-        shuffle =! shuffle
+
         if (shuffle == false){
+          document.getElementById("shuffle-song-icon").setAttribute("src", "../../images/shuffle-icon-on.png")
           this.shuffleSongOrder = []
         }
+        else{
+          document.getElementById("shuffle-song-icon").setAttribute("src", "../../images/shuffle-icon.png")
+        }
+        shuffle =! shuffle
       },
 
     }
@@ -338,13 +343,15 @@
     margin: auto;
     text-align: center;
     left: 50%;
+    padding-top: 5px;
     transform: translateX(-50%);
   }
   #previous-song-container{
     display: inline-block;
     position: relative;
     height: 35px;
-    padding-left: 10px;
+    top: 50%;
+    transform: translateY(-20%);
     padding-right: 10px;
     cursor: pointer;
     width: 35px;
@@ -352,13 +359,10 @@
   #play-icon-container{
     display: inline-block;
     position: relative;
-    height: 35px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
+    height: auto;
     margin: 0;
     cursor: pointer;
-    width: 35px;
+    width: auto;
   }
   #next-song-container{
     display: inline-block;
@@ -366,7 +370,8 @@
     height: 35px;
     margin: 0;
     padding-left: 10px;
-    padding-right: 10px;
+    top: 50%;
+    transform: translateY(-20%);
     cursor: pointer;
     width: 35px;
   }
@@ -374,6 +379,8 @@
     display: inline-block;
     position: relative;
     height: 35px;
+    top: 50%;
+    transform: translateY(-20%);
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
@@ -382,19 +389,25 @@
   }
   #play-icon {
     color: white;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
     /*margin: 20px 2.5% 10px 2.5%;*/
   }
   #next-song-icon{
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
   }
   #previous-song-icon{
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
   }
   #shuffle-song-icon{
-    height: 20px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
   }
   button {
     padding: 0;
