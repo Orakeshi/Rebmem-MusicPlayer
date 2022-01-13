@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  // Wait until window is loaded
   const path = window.require("path")
   const os = window.require("os").homedir()
   const songFolder = path.join(os, 'Music')
@@ -59,6 +58,7 @@
   let originalData
   let shuffle = false;
 
+  // Wait until window is loaded
   window.addEventListener('load', function () {
     // Store all HTML elements in variables for access at later date
     const playIconContainer = document.getElementById('play-icon');
@@ -69,7 +69,11 @@
     let playState = 'play';
 
     let muteState = 'unmute';
-
+    /***
+     * Continuously play songs without button input
+     * @param songData
+     * @param clickedId
+     */
     window.continuePlay = function (songData, clickedId){
       if (songData !== originalData){
         currentId=0
@@ -81,7 +85,6 @@
 
       // Check if user clicked song
       if (clickedId !== ""){
-        console.log(clickedId)
         for (let i in currentSongs){
           if (currentSongs[i].id == clickedId){
             currentId = currentSongs.indexOf(currentSongs[i])
@@ -93,7 +96,6 @@
       audio.onended = function (){
         currentId +=1
         if (shuffle){
-          console.log("YES SHUFFLE")
           window.shuffleOrder()
         }
 
@@ -102,7 +104,6 @@
         }
 
         audio.setAttribute("src", "file:///"+songFolder+"/"+currentSongs[currentId].audiosrc)
-        console.log(currentSongs[currentId].audiosrc)
         document.getElementById("song-img").setAttribute("src", currentSongs[currentId].imgdata)
         document.getElementById("song-name").innerHTML=currentSongs[currentId].title
         window.changeSong('play')
@@ -110,9 +111,11 @@
       }
     }
 
+    /***
+     * Sets currentID to a random int in range of song data
+     */
     window.shuffleOrder = function (){
       if (shuffle){
-        console.log("shuffline")
         currentId = Math.floor(Math.random() * originalData.length);
       }
     }
@@ -255,6 +258,9 @@
       }
     },
     methods: {
+      /***
+       * Handles playing next song in QUEUE on button press
+       */
       nextSong(){
         currentId +=1
         if (shuffle){
@@ -270,34 +276,31 @@
         }
         let audio = document.getElementById("audio-player-test")
         audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
-        console.log(originalData[currentId].audiosrc)
         document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
         document.getElementById("song-name").innerHTML=originalData[currentId].title
         window.changeSong('play')
 
       },
-
+      /***
+       * Handles playing previous song in QUEUE on button press
+       */
       previousSong(){
         currentId -=1
-        // if (shuffle){
-        //
-        // }
+
         if (currentId<=0){
           currentId = 0
         }
         let audio = document.getElementById("audio-player-test")
         audio.setAttribute("src", "file:///"+songFolder+"/"+originalData[currentId].audiosrc)
-        console.log(originalData[currentId].audiosrc)
         document.getElementById("song-img").setAttribute("src", originalData[currentId].imgdata)
         document.getElementById("song-name").innerHTML=originalData[currentId].title
         window.changeSong('play')
       },
-
+      /***
+       * Repsonsibe for setting button state
+       * Sets shuffle boolean value
+       */
       shuffleSong(){
-        // for (let i in originalData.length){
-        //   Math.floor(Math.random() * 100);
-        // }
-
         if (shuffle == false){
           document.getElementById("shuffle-song-icon").setAttribute("src", "../../images/shuffle-icon-on.png")
           this.shuffleSongOrder = []
