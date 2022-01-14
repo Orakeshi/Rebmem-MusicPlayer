@@ -11,13 +11,13 @@
     </div>
     <div id="song-display-parent" :key="componentKey">
       <div style="display: none" v-for="playlist in playlists" :id="'playlistmain'+playlist.id" :key="playlist.id">
-        <PlaylistSongsContainer ref="playlistSongContainer" :playlist="playlist"></PlaylistSongsContainer>
+        <PlaylistSongsContainer ref="playlistSongContainer" :allsongs="librarysongs" :playlist="playlist"></PlaylistSongsContainer>
       </div>
     </div>
     <div id="playlist-popup">
-      <PlaylistPopup></PlaylistPopup>
+      <PlaylistPopup :songs="librarysongs"></PlaylistPopup>
     </div>
-
+    <Library style="display: none" v-on:songs="getSongs($event)"></Library>
   </div>
 </template>
 
@@ -26,6 +26,7 @@
 import CreatePlaylists from "./CreatePlaylists";
 import PlaylistSongsContainer from "./PlaylistSongsContainer";
 import PlaylistPopup from "./PlaylistPopup";
+import Library from "@/components/UI/Library";
 
 const fs = window.require("fs")
 const path = window.require("path")
@@ -39,6 +40,7 @@ let playlistData="";
 export default {
   name: "Playlists",
   components: {
+    Library,
     PlaylistPopup,
     PlaylistSongsContainer,
     CreatePlaylists,
@@ -51,6 +53,7 @@ export default {
     // Store array of song data
     return {
       playlists: [],
+      librarysongs: []
     }
   },
   computed: {
@@ -59,6 +62,13 @@ export default {
     }
   },
   methods: {
+    /***
+     * Method handles reading library data
+     * @param e
+     */
+    getSongs: function (e){
+      this.librarysongs = e
+    },
     /***
      * Method handles refreshing the song container for a new playlist
      */

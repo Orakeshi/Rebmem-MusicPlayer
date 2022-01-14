@@ -6,13 +6,13 @@
 
     </div>
   </div>
-  <Library style="display: none" v-on:songs="getSongs($event)"></Library>
+<!--  <Library style="display: none" v-on:songs="getSongs($event)"></Library>-->
 </template>
 
 <script>
 // Imports for component
 import Songs from '../Songs/Songs';
-import Library from "@/components/UI/Library";
+// import Library from "@/components/UI/Library";
 
 let newSongs;
 
@@ -20,6 +20,7 @@ let newSongs;
  * method handles updating song cards on click event
  */
 window.updateAllCards = function (){
+  console.log("doing")
   for (let i in newSongs){
     let currentSong = newSongs[i]
     let songCard = document.getElementById(currentSong.id)
@@ -39,10 +40,11 @@ export default {
    */
   props:  {
     title: String,
-    playlist: Object
+    playlist: Object,
+    allsongs: Array
   },
   components: {
-    Library,
+    // Library,
     Songs,
   },
   /***
@@ -52,7 +54,7 @@ export default {
   data(){
     return {
       songs: [],
-      allsongs: [],
+      //allsongs: [],
       componentKey: 0
     }
   },
@@ -61,9 +63,9 @@ export default {
      * Method handles reading library data
      * @param e
      */
-    getSongs: function (e){
-      this.allsongs = e
-    },
+    // getSongs: function (e){
+    //   this.allsongs = e
+    // },
     /***
      * Method updates song images and names on DOM load
      */
@@ -95,6 +97,8 @@ export default {
       let songId = 1;
       let playlist = this.playlist
 
+      console.log(playlist)
+
       for (let i in playlist.songs) {
         let newSong = {
           id: "",
@@ -106,6 +110,7 @@ export default {
         newSong.title = playlist.songs[i].title;
         newSong.id = playlist.title+songId;
         let found = this.allsongs.find(item => item.title === newSong.title)
+        console.log(found)
         if (found !=null) {
           let index = this.allsongs.indexOf(found)
           newSong.imgdata = this.allsongs[index].imgdata
@@ -129,18 +134,21 @@ export default {
    */
   mounted() {
     if(document.readyState === "complete") {
-      this.$nextTick(function (){
-        this.createPlaylists()
-        this.updateCards()
-      })
+      this.createPlaylists()
+      this.updateCards()
     }
     else{
       window.addEventListener("load", ()=>{
-        this.createPlaylists()
-        this.updateCards()
+        this.$nextTick(function (){
+          this.createPlaylists()
+          this.updateCards()
+        })
       })
     }
 
+  },
+  created() {
+    this.createPlaylists()
   }
 }
 </script>

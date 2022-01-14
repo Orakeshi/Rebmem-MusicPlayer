@@ -42,6 +42,7 @@ export default {
    * Method is responsible for updating the playlist image and name in the container
    */
   mounted() {
+    console.log("YES SIR")
     window.addEventListener("load", ()=>{
       this.forceRerender()
       let playlistImg = document.getElementById('playlist'+this.playlist.id)

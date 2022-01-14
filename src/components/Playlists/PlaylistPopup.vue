@@ -20,14 +20,14 @@
     </div>
   </div>
   <div id="library-parent">
-    <Library style="display: none" v-on:songs="getSongs($event)"></Library>
+<!--    <Library style="display: none" v-on:songs="getSongs($event)"></Library>-->
   </div>
 
 </template>
 
 <script>
 // All imports and requires for component
-import Library from "../UI/Library";
+// import Library from "../UI/Library";
 const fs = window.require("fs")
 const path = window.require("path")
 const os = window.require("os").homedir()
@@ -41,9 +41,9 @@ export default {
      * handles getting all the songs from the library container
      * @param e
      */
-    getSongs: function (e){
-      this.songs = e
-    },
+    // getSongs: function (e){
+    //   this.songs = e
+    // },
     /***
      * Method handles highlighting song
      * Also handles pushing selected song to array ready to write to file
@@ -155,6 +155,9 @@ export default {
 
 
   },
+  props: {
+    songs: Array
+  },
   /***
    * Stores all array data needed for component
    * @returns {{highlightedSongs: *[], selectedSongs: *[], songs: *[]}}
@@ -162,13 +165,13 @@ export default {
   data(){
     // Store array of song data
     return {
-      songs: [],
+      //songs: [],
       selectedSongs: [],
       highlightedSongs: [],
     }
   },
   components: {
-    Library,
+    // Library,
   }
 
 }
