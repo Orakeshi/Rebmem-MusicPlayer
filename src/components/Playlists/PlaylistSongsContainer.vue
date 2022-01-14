@@ -134,13 +134,14 @@ export default {
    */
   mounted() {
     if(document.readyState === "complete") {
-      this.createPlaylists()
+      console.log("complete this one")
       this.updateCards()
     }
     else{
       window.addEventListener("load", ()=>{
+        this.createPlaylists()
         this.$nextTick(function (){
-          this.createPlaylists()
+          console.log("loaded this one")
           this.updateCards()
         })
       })
@@ -148,6 +149,7 @@ export default {
 
   },
   created() {
+    console.log("created this one")
     this.createPlaylists()
   }
 }
