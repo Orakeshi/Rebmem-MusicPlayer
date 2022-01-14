@@ -58,10 +58,10 @@ Rebmem Muisc Player
 <!-- ABOUT THE PROJECT 1-->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://i.imgur.com/jV8K5GJ.png)
+[![Product Name Screen Shot][product-screenshot]](https://i.imgur.com/Z1NBvYs.png)
 
 ### Application Showcase
-<img src="https://i.imgur.com/HkIOtuI.gif">
+<img src="https://i.imgur.com/mRUceXy.gif">
 
 This project was created for Rebmems hardware. The development was carried out over a deadline of 5 days. The application supports the typical functionality you would expect from a music player. Play, Pause, Seeking, Volume adjustment and more are all supported.
 
@@ -94,7 +94,7 @@ Below will show you how to get the application up and running on your local mach
 ### Prerequisites
 
 #### Songs Root Folder
-1. You will need to make sure you have a "Music" folder in the route of your machine
+1. You will need to make sure you have a "Music" folder in the root of your machine
 2. This is where the application will pull the song data from
 ``` 
 "C:\users\xxx\Music"
@@ -112,6 +112,8 @@ Below will show you how to get the application up and running on your local mach
 ### Things to know
 
 If you have masses of songs, the application may experience CPU spikes whilst displaying the metadata
+
+If the application interface is not updating press (Ctrl + R [Windows] OR CMD + R [Mac])
 
 Any Songs without metadata will be given default tags
 
@@ -134,7 +136,7 @@ Orakeshi (Tommy) - tommy@solarflarestudio.co.uk
 
 Project Link: [https://github.com/Orakeshi/Rebmem-MusicPlayer](https://github.com/Orakeshi/Rebmem-MusicPlayer)
 
-[product-screenshot]: https://i.imgur.com/jV8K5GJ.png
+[product-screenshot]: https://i.imgur.com/Z1NBvYs.png
 
 
 
