@@ -124,6 +124,8 @@ Only MP3 music format will be recognised
 2. Open the application
 3. Enjoy your music
 <!-- ROADMAP -->
+
+Sample songs to test can be found at: https://drive.google.com/drive/folders/1DXqxlhOzK0_znKzNvyLtafJWo-u2BrEz?usp=sharing 
 ## Roadmap
 
 See the [open issues](https://github.com/Orakeshi/Rebmem-MusicPlayer/issues) for a list of proposed features (and known issues).
